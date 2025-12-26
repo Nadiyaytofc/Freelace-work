@@ -2,146 +2,163 @@
 <html lang="si">
 <head>
   <meta charset="utf-8">
-  <title>Registration Form - Freelancing.lk</title>
+  <title>Registration Form - Freelance Work</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <style>
-    body { background-color: #0b1220; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 15px; }
+    body { background-color: #0b1220; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 15px; position: relative; padding-bottom: 80px; }
     .container { max-width: 750px; margin: 0 auto; }
-    .notice-card { background: rgba(15, 23, 42, 0.8); border: 1px solid #1e293b; border-radius: 15px; padding: 20px; margin-bottom: 25px; border-left: 5px solid #38bdf8; }
+    
+    /* Home Button Style */
+    .home-btn { position: absolute; top: 15px; right: 15px; background: #38bdf8; color: #000; padding: 8px 18px; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 0.9rem; transition: 0.3s; }
+    .home-btn:hover { background: #fff; }
+
+    /* Notice Card Style */
+    .notice-card { background: rgba(15, 23, 42, 0.8); border: 1px solid #1e293b; border-radius: 15px; padding: 20px; margin-bottom: 25px; border-left: 5px solid #38bdf8; margin-top: 50px; }
     .notice-card h3 { color: #38bdf8; margin-top: 0; font-size: 1.1rem; }
+    .notice-list { font-size: 0.85rem; color: #cbd5e1; padding-left: 20px; }
+    .notice-list li { margin-bottom: 5px; }
+
     .form-wrapper { background: #fff; color: #334155; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
     .tabs { display: flex; background: #000; padding: 5px; border-radius: 12px; margin-bottom: 20px; }
-    .tab { flex: 1; text-align: center; color: white; padding: 8px; font-size: 0.7rem; text-decoration: none; border-radius: 8px; }
+    .tab { flex: 1; text-align: center; color: white; padding: 8px; font-size: 0.7rem; border-radius: 8px; }
     .active-tab { background: #38bdf8; color: black; font-weight: bold; }
     label { display: block; margin-top: 15px; font-weight: bold; font-size: 0.85rem; color: #000; }
-    input, select, textarea { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #cbd5e1; border-radius: 8px; box-sizing: border-box; font-size: 0.9rem; }
-    .field-info { background: #fee2e2; color: #b91c1c; padding: 10px; border-radius: 8px; font-size: 0.75rem; margin-top: 5px; line-height: 1.4; border-left: 3px solid #ef4444; }
-    .upload-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
-    .upload-item { border: 1px dashed #cbd5e1; padding: 15px; border-radius: 10px; text-align: center; background: #f8fafc; cursor: pointer; }
-    .upload-label { font-size: 0.75rem; font-weight: bold; color: #1e293b; display: block; margin-bottom: 5px; }
+    input, select { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #cbd5e1; border-radius: 8px; box-sizing: border-box; font-size: 0.9rem; }
     .btn-register { background: #1d4ed8; color: white; width: 100%; padding: 16px; border: none; border-radius: 30px; font-weight: bold; font-size: 1rem; margin-top: 25px; cursor: pointer; }
-    .error-section { margin-top: 40px; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.8rem; background: #0f172a; color: #fff; border-radius: 10px; overflow: hidden; }
-    th, td { border: 1px solid #1e293b; padding: 12px; text-align: left; }
+    
+    /* Error Table Style */
+    .error-section { margin-top: 30px; background: #0f172a; border-radius: 15px; padding: 15px; border: 1px solid #334155; }
+    .error-section h4 { color: #ef4444; margin-top: 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.8rem; color: #fff; }
+    th, td { border: 1px solid #1e293b; padding: 10px; text-align: left; }
     th { background: #1e293b; color: #38bdf8; }
+
+    /* Footer Style */
+    footer { position: fixed; bottom: 0; left: 0; width: 100%; background: #0f172a; text-align: center; padding: 15px 0; border-top: 1px solid #1e293b; font-size: 0.8rem; color: #64748b; }
+
     #success-screen { display: none; text-align: center; padding: 50px 20px; background: #fff; color: #000; border-radius: 20px; }
     .member-id { font-size: 1.8rem; font-weight: 900; color: #1d4ed8; margin: 20px 0; letter-spacing: 2px; }
-    @media (max-width: 600px) { .upload-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
 
 <div class="container">
+  <a href="index.html" class="home-btn">🏠 Home</a>
+
   <div class="notice-card">
-    <h3>වැරදි තොරතුරු ඇතුළත් කළහොත් මොකද වෙන්නේ?</h3>
-    <ul style="font-size: 0.85rem; color: #cbd5e1;">
-      <li>වට්ස් ඇප් අංකය වැරදි නම් පුහුණු ගෲප් වලට සම්බන්ධ වීමට නොහැක.</li>
-      <li>හැඳුනුම්පත් (NIC) අංකය ව්‍යාජ එකක් නම් වැටුප් ලබාගැනීමට නොහැක.</li>
-      <li style="color: #fca5a5; font-weight: bold;">⚠️ වැරදි තොරතුරු නැවත නිවැරදි කිරීමට රු.100 ක සේවා ගාස්තුවක් ගෙවීමට සිදුවේ.</li>
+    <h3>කළ යුතු සහ නොකළ යුතු දේ (Notice)</h3>
+    <ul class="notice-list">
+      <li>✅ සැමවිටම ඔබේ සත්‍ය නම සහ නිවැරදි NIC අංකය ඇතුළත් කරන්න.</li>
+      <li>✅ ක්‍රියාකාරී WhatsApp අංකයක් ලබාදීමට කාරුණික වන්න.</li>
+      <li>❌ වැරදි තොරතුරු ඇතුළත් කළහොත් ලියාපදිංචිය අවලංගු වේ.</li>
+      <li>❌ එකම තොරතුරු භාවිතා කර කිහිප වතාවක් ලියාපදිංචි නොවන්න.</li>
     </ul>
   </div>
 
   <div class="form-wrapper" id="main-form">
     <div class="tabs">
-        <div class="tab active-tab">Register<br>Freelancer Form</div>
-        <div class="tab" style="background: #1e293b;">Members<br>Name & ID</div>
+        <div class="tab active-tab">Register<br>Form</div>
+        <div class="tab" style="background: #1e293b;">Members<br>ID</div>
         <div class="tab" style="background: #1e293b;">Wallet<br>Profile</div>
     </div>
 
-    <h2 style="color: #000; margin-bottom: 0;">Register as a Freelancer</h2>
-    <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 20px;">ඔබේ සත්‍ය තොරතුරු පමණක් පුරවන්න.</p>
-
-    <form  id="freelancerForm" action="https://formspree.io/f/meeqqlwl" method="POST" enctype="multipart/form-data">
-        
+    <h2 style="color: #000;">Register as a Freelancer</h2>
+    
+    <form id="freelancerForm">
         <label>NIC (හැඳුනුම්පත් අංකය)</label>
-        <input type="text" name="NIC_Number" id="nic" required>
+        <input type="text" id="nic" required>
 
         <label>Real Name (සැබෑ නම)</label>
-        <input type="text" name="Full_Name" id="fullname" required>
+        <input type="text" id="fullname" required>
 
         <label>WhatsApp No</label>
-        <input type="tel" name="WhatsApp_No" id="whatsapp" required>
-        <div class="field-info">❌ ලංකාවේ අංකයක්ම ලබා දෙන්න.</div>
+        <input type="tel" id="whatsapp" required>
 
         <label>District (දිස්ත්‍රික්කය)</label>
-        <select name="District" id="district" required>
+        <select id="district" required>
           <option value="">-- තෝරන්න --</option>
           <option>Colombo</option><option>Gampaha</option><option>Kalutara</option><option>Kandy</option><option>Matale</option><option>Nuwara Eliya</option><option>Galle</option><option>Matara</option><option>Hambantota</option><option>Jaffna</option><option>Kilinochchi</option><option>Mannar</option><option>Vavuniya</option><option>Mullaitivu</option><option>Batticaloa</option><option>Ampara</option><option>Trincomalee</option><option>Kurunegala</option><option>Puttalam</option><option>Anuradhapura</option><option>Polonnaruwa</option><option>Badulla</option><option>Moneragala</option><option>Ratnapura</option><option>Kegalle</option>
         </select>
 
-        <label>Uploads (ඡායාරූප තෝරන්න)</label>
-        <div class="upload-grid">
-          <div class="upload-item" onclick="document.getElementById('nic-f').click()">
-            <span class="upload-label" id="label-f">NIC Front</span>
-            <input type="file" name="NIC_Front_Photo" id="nic-f" hidden onchange="document.getElementById('label-f').innerText='Selected'">
-          </div>
-          <div class="upload-item" onclick="document.getElementById('nic-b').click()">
-            <span class="upload-label" id="label-b">NIC Back</span>
-            <input type="file" name="NIC_Back_Photo" id="nic-b" hidden onchange="document.getElementById('label-b').innerText='Selected'">
-          </div>
-          <div class="upload-item" onclick="document.getElementById('selfie').click()">
-            <span class="upload-label" id="label-s">Selfie with NIC</span>
-            <input type="file" name="Selfie_Photo" id="selfie" hidden onchange="document.getElementById('label-s').innerText='Selected'">
-          </div>
-          <div class="upload-item" onclick="document.getElementById('fb').click()">
-            <span class="upload-label" id="label-fb">FB Profile</span>
-            <input type="file" name="FB_Profile_Photo" id="fb" hidden onchange="document.getElementById('label-fb').innerText='Selected'">
-          </div>
-        </div>
-
-        <input type="hidden" name="Assigned_Member_ID" id="hidden-mid">
-
-        <button type="submit" class="btn-register">Register - ලියාපදිංචි වන්න</button>
+        <button type="submit" class="btn-register">Register Now</button>
     </form>
   </div>
 
   <div id="success-screen" class="form-wrapper">
     <div style="font-size: 50px; color: #22c55e;">✔</div>
-    <h1 style="color: #22c55e; margin: 10px 0;">Registration Success!</h1>
-    <p>ඔබේ තොරතුරු අප වෙත ලැබුණි. සාමාජික අංකය පහත දැක්වේ.</p>
+    <h1 style="color: #22c55e;">Success!</h1>
+    <p>ලියාපදිංචිය සාර්ථකයි. ඔබේ ID එක:</p>
     <div class="member-id" id="m-id"></div>
-    <p style="font-size: 0.8rem;">මෙම අංකය සුරක්ෂිතව තබා ගන්න.</p>
     <button class="btn-register" onclick="window.location.href='index.html'">Back to Home</button>
   </div>
 
   <div class="error-section">
-    <h3 style="color: #ef4444; border-bottom: 1px solid #ef4444; padding-bottom: 10px;">ලියාපදිංචි වීමේදී ඇතිවන ගැටළු</h3>
+    <h4>ලියාපදිංචි වීමේදී ඇතිවන ගැටළු (Solutions)</h4>
     <table>
-      <tr><th style="background:#ef4444">Error Message</th><th>පිළියම</th></tr>
-      <tr><td>NIC already registered.</td><td>දැනටමත් ලියාපදිංචි වී ඇත.</td></tr>
-      <tr><td>Error encoding files.</td><td>ඡායාරූපයේ ප්‍රමාණය වැඩියි. Screenshot එකක් දමන්න.</td></tr>
+      <tr>
+        <th>ගැටළුව (Error)</th>
+        <th>පිළියම (Solution)</th>
+      </tr>
+      <tr>
+        <td>දත්ත යැවීමේදී දෝෂයක් ඇති වීම</td>
+        <td>අන්තර්ජාල සම්බන්ධතාවය පරීක්ෂා කර නැවත උත්සාහ කරන්න.</td>
+      </tr>
+      <tr>
+        <td>ID අංකය දිස් නොවීම</td>
+        <td>පිටුව Refresh කර නැවත තොරතුරු ඇතුළත් කරන්න.</td>
+      </tr>
     </table>
   </div>
 </div>
 
+<footer>
+  &copy; 2025 Freelance work- All Rights Reserved.
+</footer>
+
 <script>
   const form = document.getElementById('freelancerForm');
-  
+  const SHEETDB_URL = 'https://sheetdb.io/api/v1/75frytfjpik0e'; 
+  const FORMSPREE_URL = 'https://formspree.io/f/meeqqlwl';
+
   form.onsubmit = async (e) => {
     e.preventDefault();
     
-    // Member ID එක හදාගන්නවා
     const randomID = "FL" + Math.floor(100000 + Math.random() * 900000);
-    document.getElementById('hidden-mid').value = randomID;
     document.getElementById('m-id').innerText = randomID;
 
-    const formData = new FormData(form);
+    const sheetData = {
+      "NIC_Number": document.getElementById('nic').value,
+      "Full_Name": document.getElementById('fullname').value,
+      "WhatsApp_No": document.getElementById('whatsapp').value,
+      "District": document.getElementById('district').value,
+      "Member_ID": randomID
+    };
 
-    // Formspree වෙත දත්ත යවනවා
     try {
-      const response = await fetch(form.action, {
+      await fetch(SHEETDB_URL, {
         method: 'POST',
-        body: formData,
-        headers: { 'Accept': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ data: [sheetData] })
       });
 
-      if (response.ok) {
-        document.getElementById('main-form').style.display = 'none';
-        document.getElementById('success-screen').style.display = 'block';
-        window.scrollTo(0,0);
-      } else {
-        alert("දත්ත යැවීමේදී ගැටලුවක් මතු විය. නැවත උත්සාහ කරන්න.");
-      }
+      await fetch(FORMSPREE_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(sheetData)
+      });
+
+      document.getElementById('main-form').style.display = 'none';
+      document.getElementById('success-screen').style.display = 'block';
+      window.scrollTo(0,0);
+      
+    } catch (error) {
+      alert("දෝෂයක් ඇති විය. නැවත උත්සාහ කරන්න.");
+    }
+  };
+</script>
+
+</body>
+</html>      }
     } catch (error) {
       alert("අන්තර්ජාල සම්බන්ධතාවයේ ගැටලුවක්!");
     }
