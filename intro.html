@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+  <meta charset="utf-8">
+  <title>Basic Info - Freelancing.lk</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+  
+  <style>
+    /* මුල් පිටුවේ පෙනුමට ගැළපෙන වර්ණ */
+    :root {
+      --bg: #0b1220;
+      --accent: #38bdf8;
+      --card-bg: #0f172a;
+      --border: rgba(148,163,184,0.25);
+      --text-muted: rgba(226,232,240,0.72);
+    }
+
+    body {
+      margin: 0; padding: 0;
+      background: radial-gradient(1200px 700px at 20% 15%, rgba(56,189,248,.15), transparent 60%), #0b1220;
+      color: #e5e7eb;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    .top-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,16,28,0.95);
+      backdrop-filter: blur(10px);
+      padding: 15px 22px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .back-btn {
+      color: var(--accent);
+      text-decoration: none;
+      display: flex; align-items: center; gap: 8px;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+
+    /* Header Section */
+    .header-section { margin-bottom: 30px; }
+    .header-section h1 { font-size: 1.8rem; margin: 0; color: #fff; }
+    .header-section h1 span { color: var(--accent); }
+    .header-section p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+
+    .action-row { display: flex; gap: 12px; margin: 20px 0; }
+    .btn {
+      padding: 10px 20px; border-radius: 20px;
+      text-decoration: none; font-weight: bold; font-size: 0.85rem;
+      transition: 0.3s;
+    }
+    .btn-blue { background: var(--accent); color: #000; }
+    .btn-outline { border: 1px solid var(--accent); color: var(--accent); }
+
+    /* 📊 Earnings Stages Grid */
+    .stages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .stage-card {
+      background: linear-gradient(180deg, #0f172a, #0b1220);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .stage-header {
+      background: #0ea5e9;
+      padding: 12px;
+      color: #000;
+      font-weight: 800;
+      text-align: center;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+    }
+
+    .stage-content { padding: 15px; }
+    .job-item {
+      background: rgba(255,255,255,0.03);
+      margin-bottom: 8px;
+      padding: 12px;
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .job-item span:first-child { color: #fff; }
+    .price { color: var(--accent); font-weight: bold; }
+
+    /* Notice box */
+    .notice {
+      background: rgba(56, 189, 248, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 600px) {
+      .header-section h1 { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-nav">
+    <a href="index.html" class="back-btn">
+      <span class="material-symbols-outlined">arrow_back</span> ආපසු මුල් පිටුවට
+    </a>
+    <div style="font-weight: 900; letter-spacing: 1px; font-size: 0.8rem;">BASIC INFO</div>
+  </div>
+
+  <div class="container">
+    <section class="header-section">
+      <h1><span>Freelancing.lk</span> මූලික විස්තර</h1>
+      <p>අපගේ ආයතනය 2006 සිට ක්‍රියාත්මක වන ප්‍රධානතම තාක්ෂණික සේවා සැපයුම්කරුවෙකි. පහත දැක්වෙන්නේ ඔබ ලියාපදිංචි වූ පසු මුදල් උපයන්න පුළුවන් ප්‍රධාන ක්‍රමවේදයන් වේ.</p>
+      
+      <div class="action-row">
+        <a href="register.html" class="btn btn-blue">දැන්ම ලියාපදිංචි වන්න</a>
+        <a href="#" class="btn btn-outline">Chat සහය</a>
+      </div>
+    </section>
+
+    <div class="notice">
+      💡 <b>වැදගත්:</b> ඔබ ලබාගන්නා සියලුම ආදායම් ඔබගේ eWallet එකට එකතු වන අතර, අවම රැකියා 500ක් සම්පූර්ණ කළ පසු බැංකු ගිණුමට ලබාගත හැක.
+    </div>
+
+    <div class="stages-grid">
+      
+      <div class="stage-card">
+        <div class="stage-header">Stage 01 - Basic Tasks</div>
+        <div class="stage-content">
+          <div class="job-item"><span>😊 Profile Share</span> <span class="price">රු. 1.00</span></div>
+          <div class="job-item"><span>❤️ Reactions (Like/Love)</span> <span class="price">රු. 1.00</span></div>
+          <div class="job-item"><span>💬 Post Comment</span> <span class="price">රු. 1.00</span></div>
+          <div class="job-item"><span>👍 Page Like</span> <span class="price">රු. 1.00</span></div>
+          <div class="job-item"><span>👨‍👩‍👧‍👦 Group Share</span> <span class="price">රු. 2.00</span></div>
+        </div>
+      </div>
+
+      <div class="stage-card">
+        <div class="stage-header" style="background: #f59e0b;">Stage 02 - Marketing</div>
+        <div class="stage-content">
+          <div class="job-item"><span>📢 Business Promotion</span> <span class="price">රු. 50 - 5,000</span></div>
+          <div class="job-item"><span>📍 Google Map Review</span> <span class="price">රු. 45 - 55</span></div>
+          <div class="job-item"><span>✍️ Review Comments</span> <span class="price">රු. 45 - 50</span></div>
+          <div class="job-item"><span>🔄 Web Traffic / Clicks</span> <span class="price">රු. 1 - 100</span></div>
+          <div class="job-item"><span>🔗 Referral Bonus</span> <span class="price">Special</span></div>
+        </div>
+      </div>
+
+      <div class="stage-card">
+        <div class="stage-header" style="background: #10b981;">Stage 03 - Professional</div>
+        <div class="stage-content">
+          <div class="job-item"><span>⌨️ Data Entry Tasks</span> <span class="price">රු. 1 - 5,000</span></div>
+          <div class="job-item"><span>🎨 Graphic Designing</span> <span class="price">රු. 100 - 1,000</span></div>
+          <div class="job-item"><span>📥 App Install & Review</span> <span class="price">රු. 10 - 100</span></div>
+          <div class="job-item"><span>📊 Survey Completion</span> <span class="price">රු. 10 - 100</span></div>
+          <div class="job-item"><span>📱 TikTok / Insta Tasks</span> <span class="price">රු. 1 - 100</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <footer style="margin-top: 50px; text-align: center; font-size: 0.7rem; color: var(--text-muted); padding-bottom: 20px;">
+      TechLabs Innovative Solutions International (Pvt) Ltd.
+    </footer>
+  </div>
+
+</body>
+</html>
