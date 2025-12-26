@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member ID Search - Freelancing.lk</title>
+    <style>
+        body { background-color: #0b1220; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 15px; text-align: center; }
+        .container { max-width: 600px; margin: 20px auto; background: #fff; color: #334155; padding: 25px; border-radius: 20px; }
+        .tabs { display: flex; background: #000; padding: 5px; border-radius: 12px; margin-bottom: 20px; }
+        .tab { flex: 1; text-align: center; color: white; padding: 10px; font-size: 0.8rem; cursor: pointer; border-radius: 8px; }
+        .active-tab { background: #38bdf8; color: black; font-weight: bold; }
+        
+        .search-box { display: flex; gap: 10px; margin-bottom: 20px; }
+        input { flex: 1; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; }
+        .btn-search { background: #000; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9rem; }
+        th, td { border: 1px solid #e2e8f0; padding: 12px; text-align: left; }
+        th { background: #f8fafc; color: #64748b; }
+        .no-result { color: #ef4444; padding: 20px; display: none; }
+    </style>
+</head>
+<body>
+
+    <h2>My Member ID සාමාජික අංකය</h2>
+    <p style="font-size: 0.8rem; color: #cbd5e1;">ඔබ ලියාපදිංචි වූ පසුව ඔබගේ Member ID සහ සම්බන්ධ විස්තර මෙතැනින් ලබාගන්න.</p>
+
+    <div class="container">
+        <div class="tabs">
+            <div class="tab" onclick="location.href='register.html'">Register<br>Freelancer Form</div>
+            <div class="tab active-tab">Members<br>Name & Member ID</div>
+            <div class="tab" style="background: #1e293b;">Wallet<br>Profile by NIC</div>
+        </div>
+
+        <h3>Members</h3>
+        <p style="font-size: 0.75rem; color: #64748b;">සාමාජික ලැයිස්තුව - ඔබගේ නම ඇතුළත් කර Member ID එක බලාගත හැක.</p>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="නමේ කොටසක් ඇතුළත් කර Search ඔබන්න">
+            <button class="btn-search" onclick="searchMember()">Search</button>
+        </div>
+        <button onclick="clearSearch()" style="background:none; border:none; color:#64748b; cursor:pointer; font-size:0.8rem; margin-bottom:10px;">Clear</button>
+
+        <table id="memberTable">
+            <thead>
+                <tr>
+                    <th>NAME</th>
+                    <th>MEMBER ID</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                </tbody>
+        </table>
+        <div id="errorMsg" class="no-result">එවැනි නමක් ලියාපදිංචි වී නොමැත!</div>
+    </div>
+
+ <script>
+  async function searchMember() {
+    const input = document.getElementById('searchInput').value.toLowerCase();
+    const tableBody = document.getElementById('tableBody');
+    const API_URL = 'https://sheetdb.io/api/v1/75frytfjpik0e';
+    
+    if (input.trim() === "") {
+        alert("කරුණාකර නමක් ඇතුළත් කරන්න.");
+        return;
+    }
+
+    try {
+        const response = await fetch(API_URL);
+        const members = await response.json();
+
+        tableBody.innerHTML = "";
+        
+        // Google Sheet එකේ Full_Name තීරුවේ නම තිබේදැයි පරීක්ෂා කිරීම
+        const filtered = members.filter(m => 
+            m.Full_Name && m.Full_Name.toLowerCase().includes(input)
+        );
+
+        if (filtered.length > 0) {
+            filtered.forEach(m => {
+                tableBody.innerHTML += `<tr><td>${m.Full_Name}</td><td>${m.Assigned_Member_ID}</td></tr>`;
+            });
+        } else {
+            alert("එවැනි නමක් ලියාපදිංචි වී නොමැත!");
+        }
+    } catch (err) {
+        alert("දත්ත ලබාගැනීමට නොහැකි විය.");
+    }
+  }
+</script>
+
+</body>
+</html>
