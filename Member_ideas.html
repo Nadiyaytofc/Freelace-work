@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+  <meta charset="utf-8">
+  <title>FAQ & Voting System - Freelance work</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <style>
+    body { background-color: #0b1220; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
+    .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+    
+    header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px; border-bottom: 1px solid #1e293b; }
+    .logo-box { display: flex; align-items: center; gap: 10px; }
+    .logo-icon { background: #38bdf8; color: #000; font-weight: 900; padding: 8px 12px; border-radius: 8px; font-size: 1.2rem; }
+    .logo-title { font-weight: bold; font-size: 1rem; }
+    .home-btn { background: #1e293b; color: #fff; padding: 8px 15px; border-radius: 8px; text-decoration: none; border: 1px solid #334155; font-size: 0.85rem; }
+
+    .main-title { margin-top: 30px; font-size: 1.5rem; font-weight: bold; }
+    .sub-text { color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px; }
+
+    .search-section { background: rgba(30, 41, 59, 0.5); padding: 15px; border-radius: 12px; margin-bottom: 20px; }
+    .search-box { display: flex; gap: 10px; flex-wrap: wrap; }
+    .search-input { flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #334155; background: #0f172a; color: white; min-width: 200px; }
+    .btn { padding: 8px 15px; border-radius: 5px; border: none; cursor: pointer; font-weight: bold; font-size: 0.8rem; }
+    .btn-clear { background: #334155; color: white; }
+    .btn-action { background: #1e293b; color: white; border: 1px solid #334155; }
+
+    .faq-item { background: rgba(30, 41, 59, 0.3); border: 1px solid #1e293b; border-radius: 8px; margin-bottom: 10px; overflow: hidden; position: relative; }
+    .faq-question { padding: 15px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; padding-right: 90px; }
+    .faq-answer { padding: 0 15px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out, padding 0.3s; font-size: 0.85rem; color: #cbd5e1; line-height: 1.6; }
+    .faq-item.active .faq-answer { max-height: 500px; padding: 15px; border-top: 1px solid #1e293b; }
+    
+    /* Vote Styles */
+    .vote-section { position: absolute; right: 10px; top: 12px; display: flex; align-items: center; gap: 5px; z-index: 10; }
+    .vote-btn { background: transparent; border: 1px solid #38bdf8; color: #38bdf8; padding: 2px 8px; border-radius: 5px; cursor: pointer; font-size: 0.7rem; }
+    .vote-btn:hover { background: #38bdf8; color: #000; }
+    .vote-count { font-size: 0.8rem; font-weight: bold; min-width: 20px; text-align: center; }
+
+    .ask-section { margin-top: 50px; background: #fff; color: #334155; padding: 20px; border-radius: 15px; }
+    .ask-section h3 { margin-top: 0; color: #0f172a; }
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.85rem; }
+    .form-group textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1; box-sizing: border-box; font-family: inherit; }
+    .btn-submit { background: #000; color: #fff; width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+
+    footer { text-align: center; margin-top: 50px; padding: 20px; font-size: 0.75rem; color: #475569; border-top: 1px solid #1e293b; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="logo-box">
+      <div class="logo-icon">FW</div>
+      <span class="logo-title">FREELANCE WORK</span>
+    </div>
+    <a href="index.html" class="home-btn">🏠 Home</a>
+  </header>
+
+  <h2 class="main-title">නිතර අසන ප්‍රශ්න (FAQ)</h2>
+  <p class="sub-text">ප්‍රශ්නයක් මත ක්ලික් කර පිළිතුර බලන්න. ප්‍රයෝජනවත් ප්‍රශ්න සඳහා Vote කරන්න.</p>
+
+  <div class="search-section">
+    <div class="search-box">
+      <input type="text" id="faqSearch" class="search-input" placeholder="ප්‍රශ්න සොයන්න...">
+      <button class="btn btn-clear" onclick="clearSearch()">Clear</button>
+      <button class="btn btn-action" onclick="toggleAll(true)">Open All</button>
+      <button class="btn btn-action" onclick="toggleAll(false)">Close All</button>
+    </div>
+  </div>
+
+  <div id="faqList">
+    <div class="faq-item">
+      <div class="vote-section">
+        <button class="vote-btn" onclick="addVote(this)">▲ Vote</button>
+        <span class="vote-count">0</span>
+      </div>
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>ප්‍රශ්නය : මෙය නොමිලයේ ලබාදෙන රැකියාවක්ද ?</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="faq-answer">
+        පිළිතුර : ඔව්, මෙය සම්පූර්ණයෙන්ම නොමිලයේ ලියාපදිංචි වී සිදුකළ හැකි රැකියාවකි.
+      </div>
+    </div>
+  </div>
+
+  <div class="ask-section">
+    <h3>ඔබට ප්‍රශ්නයක් තිබේද?</h3>
+    <form action="https://formspree.io/f/meeqqlwl" method="POST" id="questionForm">
+      <div class="form-group">
+        <label>ඔබේ ප්‍රශ්නය මෙතැන ලියන්න</label>
+        <textarea name="message" id="userQuestion" rows="3" required placeholder="ඔබේ ප්‍රශ්නය ටයිප් කරන්න..."></textarea>
+      </div>
+      <button type="submit" class="btn-submit">ප්‍රශ්නය යොමු කරන්න</button>
+    </form>
+  </div>
+
+  <footer>
+    NH TECH ACCDAMY (Pvt) Ltd<br>
+    © Copyright 2006-2026 - සියලුම හිමිකම් ඇවිරිණි.
+  </footer>
+</div>
+
+<script>
+  // --- ලියාපදිංචි Member ID ලැයිස්තුව ---
+  const validMemberIDs = ["FL423210", "FL123456", "FL998877", "ADMIN01"];
+
+  // FAQ Toggle
+  function toggleFaq(element) {
+    element.parentElement.classList.toggle('active');
+  }
+
+  // Vote කිරීමේ ක්‍රියාවලිය
+  function addVote(btn) {
+    // Browser එකේ ID එක Save වෙලා තියෙනවාද බලයි
+    let savedID = localStorage.getItem("memberID");
+
+    if (!savedID) {
+      let inputID = prompt("Vote කිරීමට ඔබේ ලියාපදිංචි Member ID එක ඇතුළත් කරන්න:");
+      if (!inputID) return;
+
+      if (validMemberIDs.includes(inputID.toUpperCase())) {
+        localStorage.setItem("memberID", inputID.toUpperCase());
+        savedID = inputID.toUpperCase();
+      } else {
+        alert("වැරදි Member ID එකකි. කරුණාකර නැවත උත්සාහ කරන්න.");
+        return;
+      }
+    }
+
+    // Vote එක එකතු කිරීම
+    let countLabel = btn.nextElementSibling;
+    let count = parseInt(countLabel.innerText);
+    countLabel.innerText = count + 1;
+    btn.disabled = true;
+    btn.style.opacity = "0.5";
+  }
+
+  // ප්‍රශ්නය Submit කළ විට එය ලැයිස්තුවට එකතු කිරීම සහ Email යැවීම
+  document.getElementById('questionForm').onsubmit = function(e) {
+    const questionText = document.getElementById('userQuestion').value;
+    
+    // UI එකට වහාම එකතු කිරීම
+    const faqList = document.getElementById('faqList');
+    const newItem = document.createElement('div');
+    newItem.className = 'faq-item';
+    newItem.innerHTML = `
+      <div class="vote-section">
+        <button class="vote-btn" onclick="addVote(this)">▲ Vote</button>
+        <span class="vote-count">0</span>
+      </div>
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>ප්‍රශ්නය : ${questionText}</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="faq-answer">
+        පිළිතුර : (මෙම ප්‍රශ්නයට පිළිතුරක් ඉක්මනින් ලබා දෙනු ඇත - Admin)
+      </div>
+    `;
+    
+    faqList.prepend(newItem); // අලුත් ප්‍රශ්නය ඉහළටම එකතු වේ
+    
+    // මෙතනින් පසු Form එක Formspree හරහා Email එකට යයි
+    alert("ඔබේ ප්‍රශ්නය සාර්ථකව යොමු විය. එයට පිළිතුර Admin විසින් ඉක්මනින් එකතු කරනු ඇත.");
+  };
+
+  // Search Function
+  document.getElementById('faqSearch').oninput = function() {
+    let val = this.value.toLowerCase();
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.style.display = item.innerText.toLowerCase().includes(val) ? "block" : "none";
+    });
+  };
+
+  function clearSearch() {
+    document.getElementById('faqSearch').value = '';
+    document.querySelectorAll('.faq-item').forEach(item => item.style.display = "block");
+  }
+
+  function toggleAll(show) {
+    document.querySelectorAll('.faq-item').forEach(item => {
+      if (show) item.classList.add('active');
+      else item.classList.remove('active');
+    });
+  }
+</script>
+
+</body>
+  </html>
