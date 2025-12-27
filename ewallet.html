@@ -18,41 +18,41 @@
 
     .main-title { margin-top: 30px; font-size: 1.5rem; font-weight: bold; }
     .main-title span { color: #38bdf8; }
-    .sub-desc { color: #94a3b8; font-size: 0.85rem; margin-top: 5px; margin-bottom: 20px; }
-    .warning-box { background: rgba(251, 191, 36, 0.1); border-left: 4px solid #fbbf24; padding: 15px; border-radius: 8px; font-size: 0.8rem; line-height: 1.5; color: #cbd5e1; margin-bottom: 30px; }
     
     .profile-card { background: #fff; color: #334155; padding: 25px; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
     .tabs { display: flex; background: #000; padding: 5px; border-radius: 50px; margin-bottom: 25px; gap: 5px; }
     .tab { flex: 1; text-align: center; color: white; padding: 10px 5px; font-size: 0.65rem; border-radius: 50px; text-decoration: none; display: flex; flex-direction: column; justify-content: center; line-height: 1.2; }
-    .tab span { display: block; font-size: 0.55rem; opacity: 0.7; }
     .active-tab { background: #38bdf8; color: black; font-weight: bold; }
     
     .input-group { margin-bottom: 20px; }
     .input-group label { display: block; font-weight: bold; font-size: 0.85rem; margin-bottom: 8px; color: #1e293b; }
-    .input-group input { width: 100%; padding: 15px; border: 1px solid #cbd5e1; border-radius: 12px; box-sizing: border-box; font-size: 0.9rem; background: #f8fafc; }
+    .input-group input { width: 100%; padding: 15px; border: 1px solid #cbd5e1; border-radius: 12px; box-sizing: border-box; font-size: 0.9rem; background: #f8fafc; color: #000; }
     .btn-show { background: #000; color: #fff; width: 100%; padding: 16px; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 0.9rem; }
 
-    /* --- Photo එකේ පෙනෙන පරිදි Profile Result අලුත් නිර්මාණය --- */
-    #profile-result { display: none; margin-top: 25px; text-align: center; background: #f8fafc; border-radius: 20px; padding: 25px; border: 1px solid #e2e8f0; }
+    /* Profile Result Styling from Screenshot */
+    #profile-result { display: none; margin-top: 25px; background: #fff; border-radius: 20px; padding: 15px; border: 1px solid #e2e8f0; }
+    .profile-header-nic { color: #38bdf8; font-weight: 800; font-size: 1.2rem; margin-bottom: 15px; text-align: center; }
     
-    .profile-img-container { position: relative; width: 80px; height: 80px; margin: 0 auto 15px; }
-    .profile-img { width: 100%; height: 100%; border-radius: 50%; background: #38bdf8; display: flex; align-items: center; justify-content: center; font-size: 30px; color: white; font-weight: bold; border: 4px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-    .status-badge { position: absolute; bottom: 0; right: 0; background: #22c55e; width: 18px; height: 18px; border-radius: 50%; border: 3px solid #fff; }
+    .info-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
+    .info-table th { background: #0f172a; color: #fff; text-align: left; padding: 10px; font-size: 0.8rem; }
+    .info-table td { padding: 10px; border-bottom: 1px solid #f1f5f9; font-size: 0.85rem; color: #1e293b; font-weight: 600; }
+    .info-table tr td:first-child { color: #64748b; font-weight: normal; width: 40%; }
 
-    .res-name { font-size: 1.2rem; font-weight: 800; color: #0f172a; margin-bottom: 5px; }
-    .res-id-tag { display: inline-block; background: #e0f2fe; color: #0369a1; padding: 4px 12px; border-radius: 50px; font-size: 0.75rem; font-weight: bold; margin-bottom: 20px; }
+    /* Account Status Box */
+    .status-box { background: #000; color: #fff; padding: 15px; border-radius: 15px; margin-bottom: 15px; text-align: left; }
+    .status-title { font-size: 0.7rem; text-transform: uppercase; color: #94a3b8; margin-bottom: 5px; display: block; }
+    .status-msg { font-weight: bold; color: #fbbf24; font-size: 0.85rem; }
 
-    .info-grid { text-align: left; background: #fff; border-radius: 15px; padding: 15px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); }
-    .info-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f1f5f9; }
-    .info-row:last-child { border-bottom: none; }
-    .info-label { font-size: 0.8rem; color: #64748b; font-weight: 600; }
-    .info-value { font-size: 0.85rem; color: #1e293b; font-weight: 700; }
+    /* Balance Box */
+    .balance-box { background: #000; color: #fff; padding: 20px; border-radius: 15px; position: relative; }
+    .balance-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .bal-label { font-size: 0.85rem; font-weight: bold; }
+    .bal-value { font-size: 1.2rem; font-weight: 900; color: #38bdf8; }
+    .bal-desc { font-size: 0.7rem; color: #94a3b8; line-height: 1.4; border-top: 1px solid #1e293b; padding-top: 10px; margin-top: 5px; }
 
-    /* Payment Notice Section */
     .payment-section { margin-top: 40px; border: 1px solid #1e293b; border-radius: 15px; padding: 20px; background: rgba(15, 23, 42, 0.5); }
     .payment-title { font-weight: bold; color: #38bdf8; font-size: 1.1rem; margin-bottom: 15px; }
     .payment-body { font-size: 0.85rem; line-height: 1.6; color: #cbd5e1; }
-    .bank-details { margin: 15px 0; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 10px; }
     .btn-receipt { background: #38bdf8; color: #000; border: none; padding: 12px; border-radius: 50px; font-weight: bold; margin-top: 15px; cursor: pointer; width: 100%; text-decoration: none; display: inline-block; text-align: center; }
 
     footer { text-align: center; margin-top: 40px; font-size: 0.7rem; color: #475569; padding: 20px; border-top: 1px solid #1e293b; }
@@ -73,11 +73,6 @@
   </header>
 
   <h2 class="main-title">eWallet <span>වැටුප්</span></h2>
-  <p class="sub-desc">ඔබගේ earnings, progress සහ අනෙකුත් wallet විස්තර මෙහි බැලිය හැක.</p>
-
-  <div class="warning-box">
-    ⚠️ පහත ෆෝම් එක load නොවුනහොත්, Google Chrome හැර වෙනත් වෙබ් බ්‍රවුසර් එකක් හෝ Google Chrome Incognito Window එකකින් www.freelancing.lk වෙබ් අඩවිය විවෘත කරගෙන Register වන්න.
-  </div>
 
   <div class="profile-card">
     <div class="tabs">
@@ -90,32 +85,42 @@
       <h3 style="margin-top:0;">Wallet / Profile</h3>
       <div class="input-group">
         <label>NIC (Profile සෙවීමට)</label>
-        <input type="text" id="searchNic" placeholder="Eg: 199012345678 or 901234567V">
+        <input type="text" id="searchNic" placeholder="Eg: xxxxxxxxx">
       </div>
       <button class="btn-show" onclick="searchProfile()">Wallet එක පෙන්වන්න</button>
     </div>
 
     <div id="profile-result">
-      <div class="profile-img-container">
-        <div class="profile-img" id="name-initial">N</div>
-        <div class="status-badge"></div>
-      </div>
+      <div class="profile-header-nic">Member NIC: <span id="res-nic-display"></span></div>
       
-      <div class="res-name" id="res-name">Nadil Hansaja</div>
-      <div class="res-id-tag" id="res-id">FL423210</div>
+      <table class="info-table">
+        <thead>
+          <tr><th>FIELD</th><th>VALUE</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Member ID</td><td id="res-id"></td></tr>
+          <tr><td>Real Name</td><td id="res-name"></td></tr>
+          <tr><td>WhatsApp No</td><td id="res-whatsapp"></td></tr>
+          <tr><td>District</td><td id="res-district"></td></tr>
+        </tbody>
+      </table>
 
-      <div class="info-grid">
-        <div class="info-row">
-          <span class="info-label">WhatsApp</span>
-          <span class="info-value" id="res-whatsapp">0740952053</span>
+      <div class="status-box">
+        <span class="status-title">ACCOUNT ACTIVATION STATUS</span>
+        <div class="status-msg" id="res-status">Not Verified. ඔබ ජොබ් 10ක් අවසන් කළ පසු ගිණුම Verify කරනු ලැබේ.</div>
+      </div>
+
+      <div class="balance-box">
+        <div class="balance-row">
+          <span class="bal-label">Register Bonus :</span>
+          <span class="bal-value">Rs.500</span>
         </div>
-        <div class="info-row">
-          <span class="info-label">District</span>
-          <span class="info-value" id="res-district">Monaragala</span>
+        <div class="balance-row">
+          <span class="bal-label">Wallet Balance :</span>
+          <span class="bal-value" id="res-balance">Rs.0</span>
         </div>
-        <div class="info-row">
-          <span class="info-label">Account Status</span>
-          <span class="info-value" style="color: #22c55e;">Active</span>
+        <div class="bal-desc">
+          ඔබ මුල් ජොබ් 500 අවසන් කළ පසුව ඉහත බෝනස් එක හිමිවේ. Wallet Balance එක Rs.50ට වැඩිනම් ඔබට කැමති මොහොතක Withdraw කළ හැක.
         </div>
       </div>
     </div>
@@ -124,44 +129,38 @@
   <div class="payment-section">
     <div class="payment-title">ඔබගේ තොරතුරු වැරදිද? <span style="color:#fff;">නිවැරදි කරගන්න අවශ්‍ය ද ?</span></div>
     <div class="payment-body">
-      ⚠️ ඔබගේ පෞද්ගලික තොරතුරු දන්නේ ඔබයි. ඔබගේ නම, ලිපිනය, දුරකථන අංකය වැනි දේ ඔබට නිවැරදිව ටයිප් කල නොහැකිනම් ඔබට ඇත්තෙන්ම ඔන්ලයින් රැකියාවක් කල නොහැක. Submit කිරීමට පෙර තොරතුරු නිවැරදි බව ඔබ විසින් සනාථ කරන නිසා ඔබට පසුව ඒවා නිවැරදි කිරීමට අවශ්‍ය නම් ඒ සදහා අපගේ කාලය වෙන් කිරීමට සිදුවන නිසා ඔබට සිදුවනවා රු.100ක නැවත ගෙවන ගාස්තුවක් ගෙවන්න. <br><br>
-      
-      <span style="font-size: 1.1rem;">ගෙවිය යුතු මුදල : <span style="color:#38bdf8;">රු.100</span></span>
-      
-      <div class="bank-details">
-        ගිණුමේ නම : xxxxxxx<br>
-        ගිණුම් අංකය : xxxxxxxxx<br>
-        බැංකුව: xxxxxx<br>
-        ශාඛාව : xxxxxx<br><br>
-        Dialog eZCash - 0740952053<br>
-        
-      </div>
+      Submit කිරීමට පෙර තොරතුරු නිවැරදි බව ඔබ විසින් සනාථ කරන නිසා ඔබට පසුව ඒවා නිවැරදි කිරීමට අවශ්‍ය නම් ඒ සදහා රු.100ක ගාස්තුවක් ගෙවීමට සිදුවේ.
     </div>
     <a href="https://wa.me/94740952053" class="btn-receipt">රිසිට්පත එවන්න - 0740952053</a>
   </div>
 
   <footer>
      NH TECH ACCDAMY (Pvt) Ltd (Business HUB Sri Lanka)<br>
-    තාක්ෂණික ආයතනයේ "Freelance work" ඔන්ලයින් රැකියා ව්‍යාපාරයේ තවත් එක් සමාජ මෙහෙවරකි. © Copyright 2006-2026<br><br>
-    නදිල් හංසජ මහතා විසින් සිදුකරන ලද නිර්මාණයකි.
+     © Copyright 2006-2026 | නදිල් හංසජ මහතා විසින් සිදුකරන ලද නිර්මාණයකි.
   </footer>
 </div>
 
 <script>
+  // දත්ත පද්ධතිය (database)
+  // මෙහි jobsCompleted: 10 ට වඩා වැඩි නම් Verify ලෙස පෙන්වයි.
   const database = [
     {
       nic: "200619200132",
       name: "Nadil Hansaja",
-      memberId: "FL423210",
-      district: "Monaragala",
-      whatsapp: "0740952053"
+      memberId: "FRT2538",
+      district: "මොණරාගල",
+      whatsapp: "740952053",
+      jobsCompleted: 10, // ජොබ් 10ට අඩු නිසා Not Verified පෙන්වයි
+      balance: "1000"
     },
     {
       nic: "951234567V",
-      name: "කසුන් කුමාර",
+      name: "Kasun Kumara",
       memberId: "FLT1002",
       district: "Gampaha",
-      whatsapp: "0712345678"
+      whatsapp: "0712345678",
+      jobsCompleted: 15, // ජොබ් 10ට වැඩි නිසා Verified පෙන්වයි
+      balance: "750"
     }
   ];
 
@@ -172,21 +171,31 @@
     const user = database.find(u => u.nic === nicInput);
 
     if (user) {
+      document.getElementById('res-nic-display').innerText = user.nic;
       document.getElementById('res-name').innerText = user.name;
       document.getElementById('res-id').innerText = user.memberId;
       document.getElementById('res-whatsapp').innerText = user.whatsapp;
       document.getElementById('res-district').innerText = user.district;
+      document.getElementById('res-balance').innerText = "Rs." + user.balance;
       
-      // නමේ මුල් අකුර පෙන්වීමට
-      document.getElementById('name-initial').innerText = user.name.charAt(0).toUpperCase();
+      // Verification Status පරීක්ෂාව
+      const statusElement = document.getElementById('res-status');
+      if(user.jobsCompleted >= 10) {
+        statusElement.innerText = "Verified. ඔබගේ ගිණුම සක්‍රීයයි.";
+        statusElement.style.color = "#22c55e"; // කොළ පාට
+      } else {
+        statusElement.innerText = "Not Verified. ඔබ ජොබ් 10ක් අවසන් කළ පසු ගිණුම Verify කරනු ලැබේ.";
+        statusElement.style.color = "#fbbf24"; // කහ පාට
+      }
       
       resultDiv.style.display = 'block';
+      window.scrollTo({ top: resultDiv.offsetTop, behavior: 'smooth' });
     } else {
-      alert("මෙම NIC අංකය යටතේ දත්ත හමු නොවීය. කරුණාකර නිවැරදි අංකය ඇතුළත් කරන්න.");
+      alert("මෙම NIC අංකය යටතේ දත්ත හමු නොවීය.");
       resultDiv.style.display = 'none';
     }
   }
 </script>
 
 </body>
-  </html>
+</html>
