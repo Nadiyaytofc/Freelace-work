@@ -139,10 +139,7 @@
      © Copyright 2006-2026 | නදිල් හංසජ මහතා විසින් සිදුකරන ලද නිර්මාණයකි.
   </footer>
 </div>
-
 <script>
-  // දත්ත පද්ධතිය (database)
-  // මෙහි jobsCompleted: 10 ට වඩා වැඩි නම් Verify ලෙස පෙන්වයි.
   const database = [
     {
       nic: "200619200132",
@@ -150,8 +147,8 @@
       memberId: "FRT2538",
       district: "මොණරාගල",
       whatsapp: "740952053",
-      jobsCompleted: 10,
-      balance: "0"
+      jobsCompleted: 10, // Not Verified වීමට නම් 10ට වඩා අඩු විය යුතුයි
+      balance: "1000"
     },
     {
       nic: "951234567V",
@@ -163,20 +160,23 @@
       balance: "750"
     },
     {
-      nic: "802693847v",
+      nic: "802693847V", // V කැපිටල් කරන ලදී
       name: "Dinesh gamage",
       memberId: "FRT2539",
       district: "නුවර",
       whatsapp: "754786256",
       jobsCompleted: 10,
       balance: "0"
-    } // අවසාන දත්තයට පසුව කොමාවක් (,) අවශ්‍ය නොවේ
+    }
   ];
+
   function searchProfile() {
-    const nicInput = document.getElementById('searchNic').value.trim();
+    // ටයිප් කරන අකුරු සියල්ල Capital කර පරීක්ෂා කිරීම (v සහ V ගැටලුව නැති කිරීමට)
+    const nicInput = document.getElementById('searchNic').value.trim().toUpperCase();
     const resultDiv = document.getElementById('profile-result');
     
-    const user = database.find(u => u.nic === nicInput);
+    // Database එකේ ඇති NIC ද Capital කර සසඳන්න
+    const user = database.find(u => u.nic.toUpperCase() === nicInput);
 
     if (user) {
       document.getElementById('res-nic-display').innerText = user.nic;
@@ -186,14 +186,15 @@
       document.getElementById('res-district').innerText = user.district;
       document.getElementById('res-balance').innerText = "Rs." + user.balance;
       
-      // Verification Status පරීක්ෂාව
       const statusElement = document.getElementById('res-status');
+      
+      // මෙහි කොන්දේසිය ඔබේ අවශ්‍යතාව අනුව පරීක්ෂා කරන්න
       if(user.jobsCompleted >= 10) {
         statusElement.innerText = "Verified. ඔබගේ ගිණුම සක්‍රීයයි.";
-        statusElement.style.color = "#22c55e"; // කොළ පාට
+        statusElement.style.color = "#22c55e"; 
       } else {
         statusElement.innerText = "Not Verified. ඔබ ජොබ් 10ක් අවසන් කළ පසු ගිණුම Verify කරනු ලැබේ.";
-        statusElement.style.color = "#fbbf24"; // කහ පාට
+        statusElement.style.color = "#fbbf24";
       }
       
       resultDiv.style.display = 'block';
