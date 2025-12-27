@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="utf-8">
+    <title>Task List - Freelancing.lk</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+    <style>
+        :root {
+            --bg-color: #0b1220; 
+            --card-bg: #0f172a;
+            --accent-green: #22c55e; 
+            --text-main: #e5e7eb;
+            --text-muted: #94a3b8;
+        }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg-color); color: var(--text-main); margin: 0; padding: 20px; }
+        .container { max-width: 700px; margin: 0 auto; }
+        
+        .earnings-card { background: var(--card-bg); padding: 20px; border-radius: 15px; display: flex; align-items: center; gap: 15px; margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.1); }
+        .earnings-icon { background: rgba(56, 189, 248, 0.1); color: #38bdf8; padding: 10px; border-radius: 50%; display: flex; }
+        
+        .task-list-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 20px; }
+        .task-item { background: var(--card-bg); border-radius: 15px; padding: 18px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255,255,255,0.05); }
+        .task-info h4 { margin: 0; font-size: 0.95rem; }
+        .task-info p { margin: 5px 0; font-size: 0.75rem; color: var(--text-muted); }
+        .price-tag { background: rgba(34, 197, 94, 0.1); color: var(--accent-green); padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; }
+        
+        .btn-join { background: var(--accent-green); color: white; border: none; padding: 10px 25px; border-radius: 50px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: 0.3s; }
+        .btn-join:hover .arrow { transform: translateX(5px); }
+
+        .view-step { display: none; background: var(--card-bg); padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
+        .checkout-box { margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
+        .btn-checkout { background: var(--accent-green); color: white; width: 100%; padding: 15px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center; }
+        
+        /* නව Back to List බොත්තම */
+        .btn-back-to-list { background: transparent; color: var(--accent-green); width: 100%; padding: 12px; border-radius: 12px; border: 1px solid var(--accent-green); font-weight: bold; cursor: pointer; display: none; justify-content: center; align-items: center; margin-top: 15px; font-size: 0.9rem; }
+
+        .loader { width: 22px; height: 22px; border: 3px solid #ffffff; border-bottom-color: transparent; border-radius: 50%; display: none; animation: rotation 1s linear infinite; }
+        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .success-banner { display: none; background: rgba(34, 197, 94, 0.15); color: var(--accent-green); padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid var(--accent-green); align-items: center; gap: 10px; font-weight: bold; }
+        .progress-bar { height: 8px; background: #1e293b; border-radius: 5px; margin: 15px 0; overflow: hidden; display: none; }
+        .progress-fill { height: 100%; background: var(--accent-green); width: 0%; transition: 1.5s; }
+    </style>
+</head>
+<body>
+
+<div class="container" id="mainView">
+    <div class="earnings-card">
+        <div class="earnings-icon"><span class="material-symbols-outlined">payments</span></div>
+        <div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">Monthly Earnings</div>
+            <div style="font-size: 1.4rem; font-weight: bold;">$0.00</div>
+        </div>
+    </div>
+    
+    <div class="task-list-title">Task List</div>
+    <div id="taskList"></div>
+</div>
+
+<div class="container view-step" id="taskDetailView">
+    <div class="task-info">
+        <h3 id="displayTitle">Task Title</h3>
+        <p id="displayDate" style="font-size: 0.8rem; color: var(--text-muted); margin-top: -10px;"></p>
+        <p style="font-size: 0.9rem; line-height: 1.6;">ලින්ක් එකට ගොස් වැඩය අවසන් කර නැවත මෙහි පැමිණ Checkout කරන්න.</p>
+        
+        <div style="margin: 25px 0; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 10px;">
+            <p style="margin-top:0; font-size: 0.8rem; color: var(--text-muted);">Content Link:</p>
+            <a id="taskLink" href="#" target="_blank" style="color: #38bdf8; text-decoration: none; font-weight: bold; word-break: break-all;">Link Loading...</a>
+        </div>
+
+        <div class="checkout-box">
+            <div class="success-banner" id="successBanner">
+                <span class="material-symbols-outlined">check_circle</span> Task checked out successfully.
+            </div>
+            <div class="progress-bar" id="progBar"><div class="progress-fill" id="fill"></div></div>
+
+            <p id="payInfo">Payment: <b id="displayPrice">LKR 0.00</b></p>
+            
+            <button class="btn-checkout" id="checkoutBtn" onclick="handleCheckout()">
+                <span id="btnText">Checkout</span>
+                <div class="loader" id="loader"></div>
+            </button>
+
+            <button id="backToListBtn" class="btn-back-to-list" onclick="goBackToList()">
+                <span class="material-symbols-outlined" style="margin-right: 8px;">arrow_back</span> Back to Task List
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const tasksData = [
+        { id: 1, title: "Visit web site for ad click | 1", date: "2025-12-27", price: "LKR 0.50", link: "https://hotmaildaily.com/link1" },
+        { id: 2, title: "Visit web site for ad click | 2", date: "2025-12-27", price: "LKR 0.50", link: "https://hotmaildaily.com/link2" },
+        { id: 3, title: "Visit web site for ad click | 3", date: "2025-12-27", price: "LKR 0.75", link: "https://youtube.com/link3" },
+        { id: 4, title: "Visit web site for ad click | 4", date: "2025-12-27", price: "LKR 0.50", link: "https://hotmaildaily.com/link4" },
+        { id: 5, title: "Visit web site for ad click  | 5", date: "2025-12-27", price: "LKR 0.40", link: "https://facebook.com/link5" }
+    ];
+
+    const taskListContainer = document.getElementById('taskList');
+
+    function loadTasks() {
+        taskListContainer.innerHTML = ""; // පරණ දත්ත ඉවත් කිරීමට
+        tasksData.forEach(task => {
+            const taskHtml = `
+                <div class="task-item">
+                    <div class="task-info">
+                        <p>${task.date}</p>
+                        <h4>${task.title}</h4>
+                        <span class="price-tag">${task.price}</span>
+                    </div>
+                    <button class="btn-join" onclick="showTask(${task.id})">
+                        Join <span class="material-symbols-outlined arrow">arrow_forward</span>
+                    </button>
+                </div>
+            `;
+            taskListContainer.innerHTML += taskHtml;
+        });
+    }
+
+    function showTask(id) {
+        const task = tasksData.find(t => t.id === id);
+        document.getElementById('displayTitle').innerText = task.title;
+        document.getElementById('displayDate').innerText = "Date: " + task.date;
+        document.getElementById('displayPrice').innerText = task.price;
+        document.getElementById('taskLink').href = task.link;
+        document.getElementById('taskLink').innerText = task.link;
+
+        document.getElementById('mainView').style.display = 'none';
+        document.getElementById('taskDetailView').style.display = 'block';
+        
+        // පෙනුම මුල සිට සැකසීම (Reset)
+        document.getElementById('successBanner').style.display = 'none';
+        document.getElementById('progBar').style.display = 'none';
+        document.getElementById('fill').style.width = '0%';
+        document.getElementById('checkoutBtn').style.display = 'flex';
+        document.getElementById('backToListBtn').style.display = 'none';
+        document.getElementById('btnText').style.display = 'block';
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('payInfo').style.display = 'block';
+    }
+
+    function handleCheckout() {
+        const btnText = document.getElementById('btnText');
+        const loader = document.getElementById('loader');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        
+        btnText.style.display = 'none';
+        loader.style.display = 'block';
+
+        setTimeout(() => {
+            loader.style.display = 'none';
+            checkoutBtn.style.display = 'none'; 
+            document.getElementById('payInfo').style.display = 'none';
+            
+            document.getElementById('successBanner').style.display = 'flex';
+            document.getElementById('progBar').style.display = 'block';
+            
+            setTimeout(() => {
+                document.getElementById('fill').style.width = '100%';
+            }, 100);
+
+            setTimeout(() => {
+                document.getElementById('backToListBtn').style.display = 'flex';
+            }, 1500);
+
+        }, 2000);
+    }
+
+    // නැවත ලැයිස්තුවට යාම සඳහා වන Function එක
+    function goBackToList() {
+        document.getElementById('taskDetailView').style.display = 'none';
+        document.getElementById('mainView').style.display = 'block';
+    }
+
+    window.onload = loadTasks;
+</script>
+
+</body>
+                  </html>
