@@ -41,7 +41,7 @@
 <body>
 
 <div class="container">
-  <a href="index.html" class="home-btn"> Home</a>
+  <a href="index.html" class="home-btn">🏠 Home</a>
 
   <div class="notice-card">
     <h3>කළ යුතු සහ නොකළ යුතු දේ (Notice)</h3>
@@ -113,52 +113,93 @@
   &copy; 2025 Freelance work- All Rights Reserved.
 </footer>
 
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
 <script>
   const form = document.getElementById('freelancerForm');
   const submitBtn = document.getElementById('submitBtn');
-  const SHEETDB_URL = 'https://sheetdb.io/api/v1/75frytfjpik0e'; 
+  
+  const SHEETDB_URL = 'https://sheetdb.io/api/v1/75frytfjpik0e';
   const FORMSPREE_URL = 'https://formspree.io/f/meeqqlwl';
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyB01A6SNm1wW7YVDzHjNGFSZIZekMQ4Wo0",
+    authDomain: "frelance-work.firebaseapp.com",
+    databaseURL: "https://frelance-work-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "frelance-work",
+    storageBucket: "frelance-work.firebasestorage.app",
+    messagingSenderId: "414755878034",
+    appId: "1:414755878034:web:a2498b02415ae25e52e24b"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
 
   form.onsubmit = async (e) => {
     e.preventDefault();
     
-    // බටන් එක Disable කිරීම (වැරදීමකින් දෙපාරක් එබීම වැලැක්වීමට)
     submitBtn.innerText = "Processing...";
     submitBtn.disabled = true;
 
-    const randomID = "FL" + Math.floor(100000 + Math.random() * 900000);
-    
-    const sheetData = {
-      "NIC_Number": document.getElementById('nic').value,
-      "Full_Name": document.getElementById('fullname').value,
-      "WhatsApp_No": document.getElementById('whatsapp').value,
-      "District": document.getElementById('district').value,
-      "Member_ID": randomID
-    };
+    const nicInput = document.getElementById('nic').value.trim();
+    const nameInput = document.getElementById('fullname').value.trim();
+    const whatsappInput = document.getElementById('whatsapp').value.trim();
+    const districtInput = document.getElementById('district').value;
 
     try {
-      // 1. SheetDB වෙත දත්ත යැවීම
+      // 1. Firebase Counter එක භාවිතා කර අනුපිළිවෙලට ID එකක් සාදා ගැනීම
+      const counterRef = database.ref('memberCounter');
+      
+      const result = await counterRef.transaction((currentValue) => {
+        return (currentValue || 0) + 1;
+      });
+
+      const nextNumber = result.snapshot.val();
+      const formattedID = "FW" + nextNumber.toString().padStart(4, '0');
+
+      // 2. Firebase දත්ත
+      const firebaseData = {
+        name: nameInput,
+        memberId: formattedID,
+        district: districtInput,
+        whatsapp: whatsappInput,
+        jobsCompleted: 0, 
+        balance: "0"
+      };
+
+      const sheetData = {
+        "NIC_Number": nicInput,
+        "Full_Name": nameInput,
+        "WhatsApp_No": whatsappInput,
+        "District": districtInput,
+        "Member_ID": formattedID
+      };
+
+      // 3. සියලුම තැන්වලට දත්ත යැවීම
+      await database.ref('members/' + nicInput).set(firebaseData);
+
       await fetch(SHEETDB_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ data: [sheetData] })
       });
 
-      // 2. Formspree වෙත දත්ත යැවීම
       await fetch(FORMSPREE_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify(sheetData)
       });
 
-      // සාර්ථක වූ පසු
-      document.getElementById('m-id').innerText = randomID;
+      // සාර්ථක තිරය පෙන්වීම
+      document.getElementById('m-id').innerText = formattedID;
       document.getElementById('main-form').style.display = 'none';
       document.getElementById('success-screen').style.display = 'block';
       window.scrollTo(0,0);
       
     } catch (error) {
-      alert("අන්තර්ජාල සම්බන්ධතාවයේ ගැටලුවක්! කරුණාකර නැවත උත්සාහ කරන්න.");
+      console.error(error);
+      alert("අන්තර්ජාල සම්බන්ධතාවයේ ගැටලුවක් හෝ දෝෂයක් ඇති විය! කරුණාකර නැවත උත්සාහ කරන්න.");
       submitBtn.innerText = "Register Now";
       submitBtn.disabled = false;
     }
@@ -166,4 +207,4 @@
 </script>
 
 </body>
-      </html>
+</html>
