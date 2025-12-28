@@ -2,207 +2,157 @@
 <html lang="si">
 <head>
   <meta charset="utf-8">
-  <title>eWallet / Profile - Freelance work</title>
+  <title>Search Member ID - Freelancing.lk</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <style>
-    body { background-color: #0b1220; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
-    .container { max-width: 600px; margin: 0 auto; padding: 20px; padding-bottom: 80px; }
-    
-    header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px; border-bottom: 1px solid #1e293b; }
-    .logo-box { display: flex; align-items: center; gap: 10px; }
-    .logo-icon { background: #38bdf8; color: #000; font-weight: 900; padding: 8px 12px; border-radius: 8px; font-size: 1.2rem; }
-    .logo-text { line-height: 1.2; }
-    .logo-title { font-weight: bold; font-size: 1rem; display: block; }
-    .logo-subtitle { font-size: 0.65rem; color: #94a3b8; }
-    .home-btn { background: #1e293b; color: #fff; padding: 8px 15px; border-radius: 8px; text-decoration: none; border: 1px solid #334155; font-size: 0.85rem; display: flex; align-items: center; gap: 5px; }
+    body { background-color: #0b1220; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 15px; }
+    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .logo-area { display: flex; align-items: center; gap: 10px; }
+    .logo-box { background: #38bdf8; color: #000; padding: 5px 10px; border-radius: 8px; font-weight: bold; }
+    .home-btn { background: #1e293b; color: #fff; padding: 8px 15px; border-radius: 20px; text-decoration: none; border: 1px solid #334155; }
 
-    .main-title { margin-top: 30px; font-size: 1.5rem; font-weight: bold; }
-    .main-title span { color: #38bdf8; }
+    .main-card { background: #fff; color: #000; border-radius: 30px; padding: 25px; max-width: 600px; margin: 0 auto; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
     
-    .profile-card { background: #fff; color: #334155; padding: 25px; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-    .tabs { display: flex; background: #000; padding: 5px; border-radius: 50px; margin-bottom: 25px; gap: 5px; }
-    .tab { flex: 1; text-align: center; color: white; padding: 10px 5px; font-size: 0.65rem; border-radius: 50px; text-decoration: none; display: flex; flex-direction: column; justify-content: center; line-height: 1.2; }
+    .tabs { display: flex; background: #000; padding: 5px; border-radius: 30px; margin-bottom: 20px; }
+    .tab { flex: 1; text-align: center; color: white; padding: 10px; font-size: 0.8rem; border-radius: 25px; text-decoration: none; }
     .active-tab { background: #38bdf8; color: black; font-weight: bold; }
+
+    .search-box { display: flex; gap: 10px; margin-top: 20px; }
+    input { flex: 1; padding: 12px; border: 1px solid #cbd5e1; border-radius: 12px; background: #f8fafc; }
+    .search-btn { background: #000; color: #fff; border: none; padding: 0 20px; border-radius: 12px; cursor: pointer; }
+    .clear-btn { background: none; border: 1px solid #cbd5e1; padding: 5px 15px; border-radius: 15px; margin-top: 10px; cursor: pointer; font-size: 0.8rem; }
+
+    .result-table { width: 100%; border-collapse: collapse; margin-top: 20px; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; }
+    th { background: #000; color: #fff; text-align: left; padding: 12px; font-size: 0.8rem; }
+    td { padding: 12px; border-bottom: 1px solid #e2e8f0; font-size: 0.9rem; font-weight: bold; }
     
-    .input-group { margin-bottom: 20px; }
-    .input-group label { display: block; font-weight: bold; font-size: 0.85rem; margin-bottom: 8px; color: #1e293b; }
-    .input-group input { width: 100%; padding: 15px; border: 1px solid #cbd5e1; border-radius: 12px; box-sizing: border-box; font-size: 0.9rem; background: #f8fafc; color: #000; }
-    .btn-show { background: #000; color: #fff; width: 100%; padding: 16px; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 0.9rem; }
-
-    /* Profile Result Styling from Screenshot */
-    #profile-result { display: none; margin-top: 25px; background: #fff; border-radius: 20px; padding: 15px; border: 1px solid #e2e8f0; }
-    .profile-header-nic { color: #38bdf8; font-weight: 800; font-size: 1.2rem; margin-bottom: 15px; text-align: center; }
-    
-    .info-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
-    .info-table th { background: #0f172a; color: #fff; text-align: left; padding: 10px; font-size: 0.8rem; }
-    .info-table td { padding: 10px; border-bottom: 1px solid #f1f5f9; font-size: 0.85rem; color: #1e293b; font-weight: 600; }
-    .info-table tr td:first-child { color: #64748b; font-weight: normal; width: 40%; }
-
-    /* Account Status Box */
-    .status-box { background: #000; color: #fff; padding: 15px; border-radius: 15px; margin-bottom: 15px; text-align: left; }
-    .status-title { font-size: 0.7rem; text-transform: uppercase; color: #94a3b8; margin-bottom: 5px; display: block; }
-    .status-msg { font-weight: bold; color: #fbbf24; font-size: 0.85rem; }
-
-    /* Balance Box */
-    .balance-box { background: #000; color: #fff; padding: 20px; border-radius: 15px; position: relative; }
-    .balance-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-    .bal-label { font-size: 0.85rem; font-weight: bold; }
-    .bal-value { font-size: 1.2rem; font-weight: 900; color: #38bdf8; }
-    .bal-desc { font-size: 0.7rem; color: #94a3b8; line-height: 1.4; border-top: 1px solid #1e293b; padding-top: 10px; margin-top: 5px; }
-
-    .payment-section { margin-top: 40px; border: 1px solid #1e293b; border-radius: 15px; padding: 20px; background: rgba(15, 23, 42, 0.5); }
-    .payment-title { font-weight: bold; color: #38bdf8; font-size: 1.1rem; margin-bottom: 15px; }
-    .payment-body { font-size: 0.85rem; line-height: 1.6; color: #cbd5e1; }
-    .btn-receipt { background: #38bdf8; color: #000; border: none; padding: 12px; border-radius: 50px; font-weight: bold; margin-top: 15px; cursor: pointer; width: 100%; text-decoration: none; display: inline-block; text-align: center; }
-
-    footer { text-align: center; margin-top: 40px; font-size: 0.7rem; color: #475569; padding: 20px; border-top: 1px solid #1e293b; }
+    .no-result { text-align: center; padding: 20px; color: #64748b; display: none; }
+    footer { text-align: center; margin-top: 40px; font-size: 0.7rem; color: #64748b; line-height: 1.6; }
   </style>
 </head>
 <body>
 
-<div class="container">
-  <header>
-    <div class="logo-box">
-      <div class="logo-icon">FW</div>
-      <div class="logo-text">
-        <span class="logo-title">FREELANCE WORK</span>
-        <span class="logo-subtitle">Project of Business HUB Sri Lanka</span>
-      </div>
-    </div>
-    <a href="index.html" class="home-btn">🏠 Home</a>
-  </header>
-
-  <h2 class="main-title">eWallet <span>වැටුප්</span></h2>
-
-  <div class="profile-card">
-    <div class="tabs">
-      <a href="register.html" class="tab">Register<span>Freelancer Form</span></a>
-      <a href="#" class="tab" style="background: #1e293b;">Members<span>Name & Member ID</span></a>
-      <a href="wallet.html" class="tab active-tab">Wallet<span>Profile by NIC</span></a>
-    </div>
-
-    <div id="search-section">
-      <h3 style="margin-top:0;">Wallet / Profile</h3>
-      <div class="input-group">
-        <label>NIC (Profile සෙවීමට)</label>
-        <input type="text" id="searchNic" placeholder="Eg: xxxxxxxxx">
-      </div>
-      <button class="btn-show" onclick="searchProfile()">Wallet එක පෙන්වන්න</button>
-    </div>
-
-    <div id="profile-result">
-      <div class="profile-header-nic">Member NIC: <span id="res-nic-display"></span></div>
-      
-      <table class="info-table">
-        <thead>
-          <tr><th>FIELD</th><th>VALUE</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Member ID</td><td id="res-id"></td></tr>
-          <tr><td>Real Name</td><td id="res-name"></td></tr>
-          <tr><td>WhatsApp No</td><td id="res-whatsapp"></td></tr>
-          <tr><td>District</td><td id="res-district"></td></tr>
-        </tbody>
-      </table>
-
-      <div class="status-box">
-        <span class="status-title">ACCOUNT ACTIVATION STATUS</span>
-        <div class="status-msg" id="res-status">Not Verified. ඔබ ජොබ් 10ක් අවසන් කළ පසු ගිණුම Verify කරනු ලැබේ.</div>
-      </div>
-
-      <div class="balance-box">
-        <div class="balance-row">
-          <span class="bal-label">Register Bonus :</span>
-          <span class="bal-value">Rs.500</span>
-        </div>
-        <div class="balance-row">
-          <span class="bal-label">Wallet Balance :</span>
-          <span class="bal-value" id="res-balance">Rs.0</span>
-        </div>
-        <div class="bal-desc">
-          ඔබ මුල් ජොබ් 500 අවසන් කළ පසුව ඉහත බෝනස් එක හිමිවේ. Wallet Balance එක Rs.50ට වැඩිනම් ඔබට කැමති මොහොතක Withdraw කළ හැක.
-        </div>
-      </div>
+<div class="header">
+  <div class="logo-area">
+    <div class="logo-box">FL</div>
+    <div>
+      <strong style="display:block; font-size:1.1rem; letter-spacing:1px;">FREELANCING.LK</strong>
+      <small style="color:#64748b;">Project of Business HUB Sri Lanka</small>
     </div>
   </div>
-
-  <div class="payment-section">
-    <div class="payment-title">ඔබගේ තොරතුරු වැරදිද? <span style="color:#fff;">නිවැරදි කරගන්න අවශ්‍ය ද ?</span></div>
-    <div class="payment-body">
-      Submit කිරීමට පෙර තොරතුරු නිවැරදි බව ඔබ විසින් සනාථ කරන නිසා ඔබට පසුව ඒවා නිවැරදි කිරීමට අවශ්‍ය නම් ඒ සදහා රු.100ක ගාස්තුවක් ගෙවීමට සිදුවේ.
-    </div>
-    <a href="https://wa.me/94740952053" class="btn-receipt">රිසිට්පත එවන්න - 0740952053</a>
-  </div>
-
-  <footer>
-     NH TECH ACCDAMY (Pvt) Ltd (Business HUB Sri Lanka)<br>
-     © Copyright 2006-2026 | නදිල් හංසජ මහතා විසින් සිදුකරන ලද නිර්මාණයකි.
-  </footer>
+  <a href="index.html" class="home-btn"> Home</a>
 </div>
+
+<h2 style="text-align:center;">My Member ID සාමාජික අංකය</h2>
+<p style="text-align:center; font-size:0.9rem; color:#cbd5e1; margin-bottom:30px;">ඔබ ලියාපදිංචි වූ පසු ඔබගේ Member ID සහ සම්බන්ධ විස්තර මෙතැනින් ලබාගන්න.</p>
+
+<div class="main-card">
+  <div class="tabs">
+    <a href="register.html" class="tab">Register<br><small>Freelancer Form</small></a>
+    <a href="#" class="tab active-tab">Members<br><small>Name & Member ID</small></a>
+    <a href="wallet.html" class="tab">Wallet<br><small>Profile by NIC</small></a>
+  </div>
+
+  <h3>Members</h3>
+  <p style="font-size:0.8rem; color:#64748b;">සාමාජික ලැයිස්තුව - ඔබගේ නම ඇතුළත් කර Member ID එක බලාගත හැක.</p>
+
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="ඔබේ නම මෙහි ටයිප් කරන්න...">
+    <button class="search-btn" onclick="searchMember()">Search</button>
+  </div>
+  <button class="clear-btn" onclick="clearSearch()">Clear</button>
+
+  <table class="result-table" id="resultTable" style="display:none;">
+    <thead>
+      <tr>
+        <th>NAME</th>
+        <th>MEMBER ID</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody">
+      </tbody>
+  </table>
+
+  <div id="noResult" class="no-result">නමක් සොයාගත නොහැකි විය. කරුණාකර නිවැරදි නම ඇතුළත් කරන්න.</div>
+</div>
+
+<footer>
+  TechLabs Innovative Solutions International (Pvt) Ltd (Business HUB Sri Lanka)<br>
+  "Freelancing.lk" ඔන්ලයින් රැකියා ව්‍යාපාරයේ තවත් එක් සමාජ මෙහෙවරකි. © 2006-2026<br>
+  ධනේෂ් මධුරංග එදිරිසූරිය විසින් සිදුකරන ලද නිර්මාණයකි.
+</footer>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
 <script>
-  const database = [
-    {
-      nic: "200619200132",
-      name: "Nadil Hansaja",
-      memberId: "FRT2538",
-      district: "මොණරාගල",
-      whatsapp: "740952053",
-      jobsCompleted: 10, // Not Verified වීමට නම් 10ට වඩා අඩු විය යුතුයි
-      balance: "1000"
-    },
-    {
-      nic: "951234567V",
-      name: "Kasun Kumara",
-      memberId: "FLT1002",
-      district: "Gampaha",
-      whatsapp: "0712345678",
-      jobsCompleted: 15,
-      balance: "750"
-    },
-    {
-      nic: "802693847V", // V කැපිටල් කරන ලදී
-      name: "Dinesh gamage",
-      memberId: "FRT2539",
-      district: "නුවර",
-      whatsapp: "754786256",
-      jobsCompleted: 10,
-      balance: "0"
+  // Firebase Configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyB01A6SNm1wW7YVDzHjNGFSZIZekMQ4Wo0",
+    authDomain: "frelance-work.firebaseapp.com",
+    databaseURL: "https://frelance-work-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "frelance-work",
+    storageBucket: "frelance-work.firebasestorage.app",
+    messagingSenderId: "414755878034",
+    appId: "1:414755878034:web:a2498b02415ae25e52e24b"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
+
+  async function searchMember() {
+    const input = document.getElementById('searchInput').value.trim().toLowerCase();
+    const table = document.getElementById('resultTable');
+    const tableBody = document.getElementById('tableBody');
+    const noResult = document.getElementById('noResult');
+
+    if (input === "") {
+        alert("කරුණාකර නමක් ඇතුළත් කරන්න.");
+        return;
     }
-  ];
 
-  function searchProfile() {
-    // ටයිප් කරන අකුරු සියල්ල Capital කර පරීක්ෂා කිරීම (v සහ V ගැටලුව නැති කිරීමට)
-    const nicInput = document.getElementById('searchNic').value.trim().toUpperCase();
-    const resultDiv = document.getElementById('profile-result');
-    
-    // Database එකේ ඇති NIC ද Capital කර සසඳන්න
-    const user = database.find(u => u.nic.toUpperCase() === nicInput);
+    tableBody.innerHTML = "";
+    table.style.display = "none";
+    noResult.style.display = "none";
 
-    if (user) {
-      document.getElementById('res-nic-display').innerText = user.nic;
-      document.getElementById('res-name').innerText = user.name;
-      document.getElementById('res-id').innerText = user.memberId;
-      document.getElementById('res-whatsapp').innerText = user.whatsapp;
-      document.getElementById('res-district').innerText = user.district;
-      document.getElementById('res-balance').innerText = "Rs." + user.balance;
-      
-      const statusElement = document.getElementById('res-status');
-      
-      // මෙහි කොන්දේසිය ඔබේ අවශ්‍යතාව අනුව පරීක්ෂා කරන්න
-      if(user.jobsCompleted >= 10) {
-        statusElement.innerText = "Verified. ඔබගේ ගිණුම සක්‍රීයයි.";
-        statusElement.style.color = "#22c55e"; 
-      } else {
-        statusElement.innerText = "Not Verified. ඔබ ජොබ් 10ක් අවසන් කළ පසු ගිණුම Verify කරනු ලැබේ.";
-        statusElement.style.color = "#fbbf24";
+    try {
+      // Firebase හි 'members' කොටසේ ඇති සියලුම දත්ත ලබාගැනීම
+      const snapshot = await database.ref('members').once('value');
+      const data = snapshot.val();
+
+      let found = false;
+
+      if (data) {
+        for (let nic in data) {
+          const member = data[nic];
+          // නම ගැලපේදැයි පරීක්ෂා කිරීම (Partial match)
+          if (member.name.toLowerCase().includes(input)) {
+            const row = `<tr>
+              <td>${member.name}</td>
+              <td style="color:#1d4ed8;">${member.memberId}</td>
+            </tr>`;
+            tableBody.innerHTML += row;
+            found = true;
+          }
+        }
       }
-      
-      resultDiv.style.display = 'block';
-      window.scrollTo({ top: resultDiv.offsetTop, behavior: 'smooth' });
-    } else {
-      alert("මෙම NIC අංකය යටතේ දත්ත හමු නොවීය.");
-      resultDiv.style.display = 'none';
+
+      if (found) {
+        table.style.display = "table";
+      } else {
+        noResult.style.display = "block";
+      }
+
+    } catch (error) {
+      console.error(error);
+      alert("දත්ත සෙවීමේදී දෝෂයක් ඇති විය.");
     }
+  }
+
+  function clearSearch() {
+    document.getElementById('searchInput').value = "";
+    document.getElementById('resultTable').style.display = "none";
+    document.getElementById('noResult').style.display = "none";
   }
 </script>
 
