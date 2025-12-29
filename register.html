@@ -5,6 +5,7 @@
   <title>Registration Form - Freelance Work</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <style>
+    /* පවතින CSS එලෙසම තබා ගත්තා */
     body { background-color: #0b1220; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 15px; position: relative; padding-bottom: 80px; }
     .container { max-width: 750px; margin: 0 auto; }
     
@@ -36,6 +37,9 @@
 
     #success-screen { display: none; text-align: center; padding: 50px 20px; background: #fff; color: #000; border-radius: 20px; }
     .member-id { font-size: 1.8rem; font-weight: 900; color: #1d4ed8; margin: 20px 0; letter-spacing: 2px; }
+
+    /* පින්තූරය තේරීමට අදාළ අමතර ස්ටයිල් */
+    .file-input-info { font-size: 0.75rem; color: #64748b; margin-top: 4px; }
   </style>
 </head>
 <body>
@@ -48,8 +52,8 @@
     <ul class="notice-list">
       <li>✅ සැමවිටම ඔබේ සත්‍ය නම සහ නිවැරදි NIC අංකය ඇතුළත් කරන්න.</li>
       <li>✅ ක්‍රියාකාරී WhatsApp අංකයක් ලබාදීමට කාරුණික වන්න.</li>
+      <li>✅ ඔබේ පැහැදිලි ඡායාරූපයක් (Profile Photo) උඩුගත කරන්න.</li>
       <li>❌ වැරදි තොරතුරු ඇතුළත් කළහොත් ලියාපදිංචිය අවලංගු වේ.</li>
-      <li>❌ එකම තොරතුරු භාවිතා කර කිහිප වතාවක් ලියාපදිංචි නොවන්න.</li>
     </ul>
   </div>
 
@@ -78,6 +82,10 @@
           <option>Colombo</option><option>Gampaha</option><option>Kalutara</option><option>Kandy</option><option>Matale</option><option>Nuwara Eliya</option><option>Galle</option><option>Matara</option><option>Hambantota</option><option>Jaffna</option><option>Kilinochchi</option><option>Mannar</option><option>Vavuniya</option><option>Mullaitivu</option><option>Batticaloa</option><option>Ampara</option><option>Trincomalee</option><option>Kurunegala</option><option>Puttalam</option><option>Anuradhapura</option><option>Polonnaruwa</option><option>Badulla</option><option>Moneragala</option><option>Ratnapura</option><option>Kegalle</option>
         </select>
 
+        <label>Profile Photo (ඔබේ ඡායාරූපයක්)</label>
+        <input type="file" id="userPhoto" accept="image/*" required>
+        <div class="file-input-info">කරුණාකර පැහැදිලි මුහුණ පෙනෙන පින්තූරයක් ලබා දෙන්න.</div>
+
         <button type="submit" id="submitBtn" class="btn-register">Register Now</button>
     </form>
   </div>
@@ -102,8 +110,8 @@
         <td>අන්තර්ජාල සම්බන්ධතාවය පරීක්ෂා කර නැවත උත්සාහ කරන්න.</td>
       </tr>
       <tr>
-        <td>ID අංකය දිස් නොවීම</td>
-        <td>පිටුව Refresh කර නැවත තොරතුරු ඇතුළත් කරන්න.</td>
+        <td>Photo Upload වීමට පමාවීම</td>
+        <td>පින්තූරයේ ප්‍රමාණය (File size) විශාල වූ විට පමාවිය හැක. සුළු මොහොතක් රැඳී සිටින්න.</td>
       </tr>
     </table>
   </div>
@@ -122,6 +130,7 @@
   
   const SHEETDB_URL = 'https://sheetdb.io/api/v1/75frytfjpik0e';
   const FORMSPREE_URL = 'https://formspree.io/f/meeqqlwl';
+  const IMGBB_API_KEY = '711ab8cc09ab1cd9d14c973336672921'; // ඔබේ ImgBB Key එක
 
   const firebaseConfig = {
     apiKey: "AIzaSyB01A6SNm1wW7YVDzHjNGFSZIZekMQ4Wo0",
@@ -139,18 +148,37 @@
   form.onsubmit = async (e) => {
     e.preventDefault();
     
-    submitBtn.innerText = "Processing...";
+    submitBtn.innerText = "Uploading & Processing...";
     submitBtn.disabled = true;
 
     const nicInput = document.getElementById('nic').value.trim();
     const nameInput = document.getElementById('fullname').value.trim();
     const whatsappInput = document.getElementById('whatsapp').value.trim();
     const districtInput = document.getElementById('district').value;
+    const photoFile = document.getElementById('userPhoto').files[0];
 
     try {
-      // 1. Firebase Counter එක භාවිතා කර අනුපිළිවෙලට ID එකක් සාදා ගැනීම
+      // 1. ImgBB වෙත පින්තූරය Upload කිරීම
+      let uploadedPhotoUrl = "";
+      if (photoFile) {
+        const formData = new FormData();
+        formData.append("image", photoFile);
+        
+        const imgbbResponse = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+          method: "POST",
+          body: formData
+        });
+        const imgbbResult = await imgbbResponse.json();
+        
+        if (imgbbResult.success) {
+          uploadedPhotoUrl = imgbbResult.data.url;
+        } else {
+          throw new Error("Photo upload failed");
+        }
+      }
+
+      // 2. Firebase Counter එක භාවිතා කර අනුපිළිවෙලට ID එකක් සාදා ගැනීම
       const counterRef = database.ref('memberCounter');
-      
       const result = await counterRef.transaction((currentValue) => {
         return (currentValue || 0) + 1;
       });
@@ -158,14 +186,16 @@
       const nextNumber = result.snapshot.val();
       const formattedID = "FW" + nextNumber.toString().padStart(4, '0');
 
-      // 2. Firebase දත්ත
+      // 3. Firebase දත්ත (පින්තූරය ඇතුළුව)
       const firebaseData = {
         name: nameInput,
         memberId: formattedID,
         district: districtInput,
         whatsapp: whatsappInput,
+        photo: uploadedPhotoUrl, // මෙතනට පින්තූරයේ ලින්ක් එක එනවා
         jobsCompleted: 0, 
-        balance: "0"
+        balance: 0,
+        status: 'active'
       };
 
       const sheetData = {
@@ -173,10 +203,11 @@
         "Full_Name": nameInput,
         "WhatsApp_No": whatsappInput,
         "District": districtInput,
-        "Member_ID": formattedID
+        "Member_ID": formattedID,
+        "Photo_URL": uploadedPhotoUrl
       };
 
-      // 3. සියලුම තැන්වලට දත්ත යැවීම
+      // 4. සියලුම තැන්වලට දත්ත යැවීම
       await database.ref('members/' + nicInput).set(firebaseData);
 
       await fetch(SHEETDB_URL, {
@@ -199,7 +230,7 @@
       
     } catch (error) {
       console.error(error);
-      alert("අන්තර්ජාල සම්බන්ධතාවයේ ගැටලුවක් හෝ දෝෂයක් ඇති විය! කරුණාකර නැවත උත්සාහ කරන්න.");
+      alert("දෝෂයක් ඇති විය! කරුණාකර ඔබගේ අන්තර්ජාලය සහ පින්තූරය පරීක්ෂා කර නැවත උත්සාහ කරන්න.");
       submitBtn.innerText = "Register Now";
       submitBtn.disabled = false;
     }
