@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+  <meta charset="utf-8">
+  <title>Leaderboard - Top Freelancers</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+  
+  <style>
+    :root { --bg: #0b1220; --accent: #38bdf8; --card: #1e293b; --gold: #fbbf24; }
+    body { background-color: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; }
+    .container { max-width: 600px; margin: 0 auto; padding-bottom: 50px; }
+    
+    .header { text-align: center; margin-bottom: 30px; }
+    .header h1 { font-size: 1.8rem; margin-bottom: 5px; color: var(--accent); }
+    .header p { color: #94a3b8; font-size: 0.9rem; }
+
+    /* Top 3 Stylings */
+    .top-three { display: flex; justify-content: center; align-items: flex-end; gap: 15px; margin-bottom: 40px; margin-top: 20px; }
+    .top-card { background: var(--card); border-radius: 15px; padding: 15px; text-align: center; position: relative; border: 1px solid #334155; }
+    .rank-1 { width: 130px; height: 180px; border: 2px solid var(--gold); }
+    .rank-2, .rank-3 { width: 110px; height: 150px; }
+    
+    .top-img { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 3px solid var(--accent); margin-bottom: 10px; }
+    .rank-1 .top-img { width: 90px; height: 90px; border-color: var(--gold); }
+    
+    .badge { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: var(--gold); color: #000; padding: 2px 10px; border-radius: 10px; font-weight: bold; font-size: 0.8rem; }
+    
+    .name { font-weight: bold; font-size: 0.85rem; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+    .count { color: var(--accent); font-weight: 900; font-size: 1.1rem; }
+
+    /* Ranking Table */
+    .list-container { background: var(--card); border-radius: 20px; overflow: hidden; border: 1px solid #334155; }
+    .list-item { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #334155; }
+    .rank-num { width: 40px; font-weight: bold; color: #94a3b8; }
+    .list-img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; margin-right: 15px; border: 1px solid var(--accent); }
+    .list-name { flex-grow: 1; font-weight: 600; font-size: 0.9rem; }
+    .list-count { font-weight: bold; color: var(--accent); }
+
+    .home-btn { display: inline-block; margin-bottom: 20px; color: var(--accent); text-decoration: none; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <a href="index.html" class="home-btn">← Back to Home</a>
+  
+  <div class="header">
+    <h1>Member Leaderboard</h1>
+    <p>වැඩිම වැඩ (Jobs) ප්‍රමාණයක් අවසන් කළ දක්ෂයින්</p>
+  </div>
+
+  <div class="top-three" id="topThree">
+    </div>
+
+  <div class="list-container" id="leaderboardList">
+    <div style="padding:20px; text-align:center;">ගණනය කරමින් පවතී...</div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyB01A6SNm1wW7YVDzHjNGFSZIZekMQ4Wo0",
+    databaseURL: "https://frelance-work-default-rtdb.asia-southeast1.firebasedatabase.app",
+  };
+  firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
+
+  async function loadLeaderboard() {
+    const snapshot = await database.ref('members').once('value');
+    const members = snapshot.val();
+    
+    if (!members) return;
+
+    // සාමාජිකයින් ලැයිස්තුව Array එකකට ගෙන වැඩිම Jobs අනුව Sort කිරීම
+    let memberArray = [];
+    for (let nic in members) {
+      memberArray.push({
+        name: members[nic].name,
+        jobs: parseInt(members[nic].jobsCompleted || 0),
+        photo: members[nic].photo || 'https://via.placeholder.com/100'
+      });
+    }
+
+    memberArray.sort((a, b) => b.jobs - a.jobs);
+
+    // Top 3 පෙන්වීම
+    const topThreeDiv = document.getElementById('topThree');
+    topThreeDiv.innerHTML = "";
+    
+    // 2 වෙනි ස්ථානය
+    if(memberArray[1]) topThreeDiv.innerHTML += renderTopCard(memberArray[1], 2, "rank-2");
+    // 1 වෙනි ස්ථානය
+    if(memberArray[0]) topThreeDiv.innerHTML += renderTopCard(memberArray[0], 1, "rank-1");
+    // 3 වෙනි ස්ථානය
+    if(memberArray[2]) topThreeDiv.innerHTML += renderTopCard(memberArray[2], 3, "rank-3");
+
+    // සම්පූර්ණ ලැයිස්තුව පෙන්වීම (Top 10 දක්වා)
+    const listDiv = document.getElementById('leaderboardList');
+    listDiv.innerHTML = "";
+    
+    memberArray.slice(0, 10).forEach((m, index) => {
+      listDiv.innerHTML += `
+        <div class="list-item">
+          <div class="rank-num">#${index + 1}</div>
+          <img src="${m.photo}" class="list-img">
+          <div class="list-name">${m.name}</div>
+          <div class="list-count">${m.jobs} Jobs</div>
+        </div>`;
+    });
+  }
+
+  function renderTopCard(member, rank, cssClass) {
+    let badgeTxt = rank == 1 ? "🥇 Winner" : (rank == 2 ? "🥈 2nd" : "🥉 3rd");
+    return `
+      <div class="top-card ${cssClass}">
+        <div class="badge">${badgeTxt}</div>
+        <img src="${member.photo}" class="top-img">
+        <span class="name">${member.name}</span>
+        <span class="count">${member.jobs}</span>
+        <div style="font-size:0.6rem; color:#94a3b8">Jobs Done</div>
+      </div>`;
+  }
+
+  loadLeaderboard();
+</script>
+
+</body>
+</html>
