@@ -31,8 +31,12 @@
     .input-group input { width: 100%; padding: 15px; border: 1px solid #cbd5e1; border-radius: 12px; box-sizing: border-box; font-size: 0.9rem; background: #f8fafc; color: #000; }
     .btn-show { background: #000; color: #fff; width: 100%; padding: 16px; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 0.9rem; display: flex; justify-content: center; align-items: center; gap: 10px; }
 
-    /* Result Styling */
+    /* Result Styling & Photo */
     #profile-result { display: none; margin-top: 25px; background: #fff; border-radius: 20px; padding: 15px; border: 1px solid #e2e8f0; }
+    
+    .profile-photo-wrapper { text-align: center; margin-bottom: 15px; }
+    .user-profile-img { width: 110px; height: 110px; border-radius: 50%; border: 4px solid #38bdf8; object-fit: cover; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+
     .profile-header-nic { color: #38bdf8; font-weight: 800; font-size: 1.2rem; margin-bottom: 15px; text-align: center; }
     
     .info-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
@@ -57,7 +61,6 @@
 
     footer { text-align: center; margin-top: 40px; font-size: 0.7rem; color: #475569; padding: 20px; border-top: 1px solid #1e293b; }
     
-    /* Loader CSS */
     .loader { border: 3px solid #f3f3f3; border-top: 3px solid #38bdf8; border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite; display: none; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
   </style>
@@ -98,6 +101,10 @@
     </div>
 
     <div id="profile-result">
+      <div class="profile-photo-wrapper">
+         <img id="res-photo" src="https://via.placeholder.com/110" class="user-profile-img">
+      </div>
+
       <div class="profile-header-nic">Member NIC: <span id="res-nic-display"></span></div>
       
       <table class="info-table">
@@ -151,7 +158,6 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
 <script>
-  // ඔබගේ Firebase Config එක
   const firebaseConfig = {
     apiKey: "AIzaSyB01A6SNm1wW7YVDzHjNGFSZIZekMQ4Wo0",
     authDomain: "frelance-work.firebaseapp.com",
@@ -159,11 +165,9 @@
     projectId: "frelance-work",
     storageBucket: "frelance-work.firebasestorage.app",
     messagingSenderId: "414755878034",
-    appId: "1:414755878034:web:a2498b02415ae25e52e24b",
-    measurementId: "G-CB39REDFKK"
+    appId: "1:414755878034:web:a2498b02415ae25e52e24b"
   };
 
-  // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   const database = firebase.database();
 
@@ -178,46 +182,49 @@
       return;
     }
 
-    // Loader පෙන්වීම
     loader.style.display = 'block';
     btnLabel.style.display = 'none';
 
-    // Firebase එකෙන් දත්ත සෙවීම
     database.ref('members/' + nicInput).once('value')
       .then((snapshot) => {
         if (snapshot.exists()) {
           const user = snapshot.val();
           
+          // දත්ත ඇතුළත් කිරීම
           document.getElementById('res-nic-display').innerText = nicInput;
           document.getElementById('res-name').innerText = user.name;
-          document.getElementById('res-id').innerText = user.memberId;
+          document.getElementById('res-id').innerText = user.memberId || "Pending";
           document.getElementById('res-whatsapp').innerText = user.whatsapp;
           document.getElementById('res-district').innerText = user.district;
           document.getElementById('res-balance').innerText = "Rs." + (user.balance || "0");
           
-          // Status පරීක්ෂාව
+          // Photo එක පෙන්වීම
+          if(user.photo) {
+              document.getElementById('res-photo').src = user.photo;
+          } else {
+              document.getElementById('res-photo').src = "https://via.placeholder.com/110?text=No+Photo";
+          }
+          
           const statusElement = document.getElementById('res-status');
           if (parseInt(user.jobsCompleted) >= 10) {
             statusElement.innerText = "Verified. ඔබගේ ගිණුම සක්‍රීයයි.";
-            statusElement.style.color = "#22c55e"; // කොළ පාට
+            statusElement.style.color = "#22c55e";
           } else {
             statusElement.innerText = "Not Verified. ඔබ ජොබ් 10ක් අවසන් කළ පසු ගිණුම Verify කරනු ලැබේ.";
-            statusElement.style.color = "#fbbf24"; // කහ පාට
+            statusElement.style.color = "#fbbf24";
           }
           
           resultDiv.style.display = 'block';
           window.scrollTo({ top: resultDiv.offsetTop - 50, behavior: 'smooth' });
         } else {
-          alert("මෙම NIC අංකය පද්ධතියේ හමු නොවීය. කරුණාකර නිවැරදි අංකය ඇතුළත් කරන්න.");
+          alert("මෙම NIC අංකය පද්ධතියේ හමු නොවීය.");
           resultDiv.style.display = 'none';
         }
       })
       .catch((error) => {
-        console.error(error);
-        alert("දත්ත සෙවීමේදී දෝෂයක් ඇති විය.");
+        alert("දෝෂයක් ඇති විය.");
       })
       .finally(() => {
-        // Loader ඉවත් කිරීම
         loader.style.display = 'none';
         btnLabel.style.display = 'block';
       });
@@ -225,4 +232,4 @@
 </script>
 
 </body>
-  </html>
+</html>
