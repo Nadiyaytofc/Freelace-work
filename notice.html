@@ -13,12 +13,14 @@
             --text: #f8fafc;
             --muted: #94a3b8;
             --green: #22c55e;
+            --red: #ef4444;
+            --orange: #f59e0b;
         }
 
         body { 
             background: var(--bg); 
             color: var(--text); 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            font-family: 'Segoe UI', sans-serif; 
             margin: 0; 
             padding: 20px; 
         }
@@ -32,87 +34,81 @@
 
         .login-box {
             background: var(--card); padding: 40px; border-radius: 24px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5); text-align: center; width: 350px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5); text-align: center; width: 320px;
         }
 
         .container { max-width: 900px; margin: 0 auto; display: none; }
 
-        h2 { color: var(--accent); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        h2 { color: var(--accent); margin-top: 30px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
 
-        /* Card Styles */
         .admin-card { 
-            background: var(--card); padding: 25px; border-radius: 20px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3); margin-bottom: 30px; 
-            border: 1px solid rgba(255,255,255,0.05);
+            background: var(--card); padding: 20px; border-radius: 20px; 
+            margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.05);
         }
 
-        textarea { 
-            width: 100%; height: 80px; padding: 15px; border-radius: 12px; 
-            border: 1px solid #334155; background: #0b1220; color: white; 
-            font-size: 1rem; resize: none; box-sizing: border-box; 
-        }
-
-        input[type="text"], input[type="password"] {
-            width: 100%; padding: 12px; margin-top: 10px; border-radius: 8px;
+        input, textarea { 
+            width: 100%; padding: 12px; margin-top: 10px; border-radius: 10px; 
             border: 1px solid #334155; background: #0b1220; color: white; box-sizing: border-box;
         }
 
         button { 
-            background: var(--accent); color: #000; border: none; padding: 12px 20px; 
-            border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; 
-            transition: 0.3s; margin-top: 15px;
+            background: var(--accent); color: #000; border: none; padding: 12px; 
+            border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 10px;
+            transition: 0.3s;
         }
 
-        button:hover { background: #0ea5e9; }
-
-        /* Member List Styles */
         .member-item {
-            background: rgba(255,255,255,0.03); padding: 20px; border-radius: 15px;
-            margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05);
-            display: flex; flex-wrap: wrap; gap: 20px; align-items: center;
+            background: rgba(255,255,255,0.03); padding: 15px; border-radius: 15px;
+            margin-bottom: 15px; display: flex; flex-wrap: wrap; gap: 15px; align-items: center;
+            border: 1px solid rgba(255,255,255,0.05);
         }
 
-        .member-img {
-            width: 80px; height: 80px; border-radius: 50%; object-fit: cover;
-            border: 2px solid var(--accent);
-        }
+        .member-img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent); }
+        .kyc-img { width: 150px; border-radius: 10px; cursor: pointer; transition: 0.3s; }
+        .kyc-img:hover { transform: scale(1.05); }
 
-        .member-info { flex: 1; min-width: 200px; }
-        .member-info div { font-size: 0.9rem; margin-bottom: 5px; }
-        .member-info b { color: var(--accent); }
+        .member-info { flex: 1; min-width: 200px; font-size: 0.9rem; }
+        .badge { display: inline-flex; align-items: center; font-size: 0.75rem; padding: 2px 8px; border-radius: 20px; margin-left: 5px; }
+        .badge-verified { background: rgba(56, 189, 248, 0.2); color: var(--accent); }
+        .badge-kyc { background: rgba(34, 197, 94, 0.2); color: var(--green); }
 
-        .edit-controls { display: flex; gap: 10px; flex-direction: column; }
-        .btn-sm { padding: 8px 15px; font-size: 0.8rem; width: auto; }
-        .btn-save { background: var(--green); color: white; display: none; }
-
-        .status { color: var(--green); font-size: 0.85rem; margin-top: 10px; display: none; }
+        .btn-sm { padding: 6px 12px; font-size: 0.75rem; width: auto; margin-right: 5px; }
+        .btn-approve { background: var(--green); color: white; }
+        .btn-reject { background: var(--red); color: white; }
+        
+        .status-tag { padding: 4px 10px; border-radius: 5px; font-size: 0.8rem; font-weight: bold; }
+        .pending { background: var(--orange); color: black; }
     </style>
 </head>
 <body>
 
 <div id="loginOverlay">
     <div class="login-box">
-        <span class="material-symbols-outlined" style="font-size: 48px; color: var(--accent);">admin_panel_settings</span>
-        <h3 style="margin-top: 10px;">Admin Login</h3>
+        <span class="material-symbols-outlined" style="font-size: 48px; color: var(--accent);">security</span>
+        <h3>Admin Access</h3>
         <input type="password" id="adminIdInput" placeholder="Enter Admin ID">
-        <button onclick="checkLogin()">Login</button>
+        <button style="width:100%" onclick="checkLogin()">Login</button>
     </div>
 </div>
 
 <div class="container" id="adminContent">
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h2><span class="material-symbols-outlined">dashboard</span> Dashboard</h2>
-        <button class="btn-sm" style="background: #ef4444; color: white;" onclick="location.reload()">Logout</button>
+        <h2><span class="material-symbols-outlined">shield_person</span> Admin Panel</h2>
+        <button class="btn-sm" style="background: var(--red); color: white;" onclick="location.reload()">Logout</button>
     </div>
 
     <div class="admin-card">
-        <h3>📢 Live Notice Control</h3>
+        <h3 style="margin-top:0"><span class="material-symbols-outlined">campaign</span> Notice Control</h3>
         <textarea id="noticeInput" placeholder="සාමාජිකයින්ට පෙන්විය යුතු පණිවිඩය..."></textarea>
-        <button onclick="updateNotice()">Update Home Notice</button>
-        <div id="statusMsg" class="status">✅ නිවේදනය සාර්ථකව යාවත්කාලීන විය!</div>
+        <button onclick="updateNotice()">Update Notice</button>
     </div>
 
-    <h2><span class="material-symbols-outlined">groups</span> Member Profiles</h2>
+    <h2><span class="material-symbols-outlined">id_card</span> KYC Requests</h2>
+    <div id="kycRequestList">
+        <p style="color: var(--muted);">Checking for requests...</p>
+    </div>
+
+    <h2><span class="material-symbols-outlined">group</span> Member Management</h2>
     <div id="memberList">
         <p style="color: var(--muted);">Loading members...</p>
     </div>
@@ -129,104 +125,116 @@
     firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
 
-    // 1. Login Logic
     function checkLogin() {
-        const id = document.getElementById('adminIdInput').value;
-        if (id === "FW0001") {
+        if (document.getElementById('adminIdInput').value === "FW0001") {
             document.getElementById('loginOverlay').style.display = 'none';
             document.getElementById('adminContent').style.display = 'block';
             loadData();
-        } else {
-            alert("වැරදි Member ID එකකි. ඇතුළු වීමට අවසර නැත.");
-        }
+        } else { alert("Access Denied!"); }
     }
 
     function loadData() {
         loadNotice();
+        loadKYCRequests();
         loadMembers();
     }
 
-    // 2. Notice Functions
     function loadNotice() {
-        database.ref('admin_notice').on('value', (snapshot) => {
-            if (snapshot.exists()) {
-                document.getElementById('noticeInput').value = snapshot.val();
-            }
+        database.ref('admin_notice').on('value', (s) => {
+            if (s.exists()) document.getElementById('noticeInput').value = s.val();
         });
     }
 
     function updateNotice() {
-        const newNotice = document.getElementById('noticeInput').value;
-        database.ref('/').update({ admin_notice: newNotice }).then(() => {
-            document.getElementById('statusMsg').style.display = 'block';
-            setTimeout(() => { document.getElementById('statusMsg').style.display = 'none'; }, 3000);
+        database.ref('/').update({ admin_notice: document.getElementById('noticeInput').value })
+        .then(() => alert("Notice Updated!"));
+    }
+
+    // --- KYC Logic ---
+    function loadKYCRequests() {
+        const kycDiv = document.getElementById('kycRequestList');
+        database.ref('kyc_requests').on('value', (snapshot) => {
+            kycDiv.innerHTML = "";
+            const requests = snapshot.val();
+            let count = 0;
+
+            for (let nic in requests) {
+                const req = requests[nic];
+                if (req.status === "Pending") {
+                    count++;
+                    kycDiv.innerHTML += `
+                        <div class="member-item">
+                            <div class="member-info">
+                                <b>NIC: ${nic}</b><br>
+                                <small>Submitted: ${req.submittedAt}</small><br><br>
+                                <a href="${req.nic_image}" target="_blank">
+                                    <img src="${req.nic_image}" class="kyc-img" title="Click to expand">
+                                </a>
+                            </div>
+                            <div class="edit-controls">
+                                <button class="btn-sm btn-approve" onclick="handleKYC('${nic}', 'Approved')">Approve Identity</button>
+                                <button class="btn-sm btn-reject" onclick="handleKYC('${nic}', 'Rejected')">Reject</button>
+                            </div>
+                        </div>`;
+                }
+            }
+            if (count === 0) kycDiv.innerHTML = "<p style='color:var(--muted)'>No pending KYC requests.</p>";
         });
     }
 
-    // 3. Member Management Functions
-    async function loadMembers() {
+    async function handleKYC(nic, status) {
+        if (confirm(`Are you sure to ${status} this request?`)) {
+            await database.ref('kyc_requests/' + nic).update({ status: status });
+            if (status === 'Approved') {
+                await database.ref('members/' + nic).update({ identity_verified: true });
+            }
+            alert("Request " + status);
+        }
+    }
+
+    // --- Member Management ---
+    function loadMembers() {
         const listDiv = document.getElementById('memberList');
         database.ref('members').on('value', (snapshot) => {
             listDiv.innerHTML = "";
             const data = snapshot.val();
-            if (!data) {
-                listDiv.innerHTML = "<p>සාමාජිකයින් පද්ධතියේ නැත.</p>";
-                return;
-            }
-
             for (let nic in data) {
                 const m = data[nic];
+                const vBadge = m.verified ? '<span class="badge badge-verified"><span class="material-symbols-outlined" style="font-size:14px">verified</span> Verified</span>' : '';
+                const iBadge = m.identity_verified ? '<span class="badge badge-kyc"><span class="material-symbols-outlined" style="font-size:14px">id_card</span> ID OK</span>' : '';
+                
                 listDiv.innerHTML += `
-                    <div class="member-item" id="card-${nic}">
-                        <img src="${m.photo || 'https://via.placeholder.com/80'}" class="member-img">
+                    <div class="member-item">
+                        <img src="${m.photo || 'https://via.placeholder.com/60'}" class="member-img">
                         <div class="member-info" id="info-${nic}">
-                            <div><b>Name:</b> <span class="v-name">${m.name || 'N/A'}</span></div>
-                            <div><b>NIC:</b> <span>${nic}</span></div>
-                            <div><b>Member ID:</b> <span class="v-mid">${m.memberId || 'N/A'}</span></div>
-                            <div><b>WhatsApp:</b> <span class="v-wa">${m.whatsapp || 'N/A'}</span></div>
-                            <div><b>Balance:</b> Rs. <span class="v-bal">${m.balance || '0'}</span></div>
+                            <div><b class="v-name">${m.name}</b> ${vBadge} ${iBadge}</div>
+                            <div>NIC: ${nic} | Bal: Rs. <span class="v-bal">${m.balance || 0}</span></div>
                         </div>
                         <div class="edit-controls">
-                            <button class="btn-sm" onclick="enableEdit('${nic}')">Edit Details</button>
-                            <button class="btn-sm btn-save" id="save-${nic}" onclick="saveEdit('${nic}')">Save Changes</button>
+                            <button class="btn-sm" style="background:var(--accent); color:black" onclick="toggleBlueTick('${nic}', ${m.verified || false})">Blue Tick</button>
+                            <button class="btn-sm" onclick="enableEdit('${nic}')">Edit Bal</button>
+                            <button class="btn-sm btn-approve" style="display:none" id="save-${nic}" onclick="saveEdit('${nic}')">Save</button>
                         </div>
-                    </div>
-                `;
+                    </div>`;
             }
         });
+    }
+
+    async function toggleBlueTick(nic, status) {
+        await database.ref('members/' + nic).update({ verified: !status });
     }
 
     function enableEdit(nic) {
-        const infoDiv = document.getElementById(`info-${nic}`);
-        const name = infoDiv.querySelector('.v-name').innerText;
-        const mid = infoDiv.querySelector('.v-mid').innerText;
-        const wa = infoDiv.querySelector('.v-wa').innerText;
-        const bal = infoDiv.querySelector('.v-bal').innerText;
-
-        infoDiv.innerHTML = `
-            <div><b>Name:</b> <input type="text" id="edit-name-${nic}" value="${name}"></div>
-            <div><b>NIC:</b> <span>${nic}</span></div>
-            <div><b>Member ID:</b> <input type="text" id="edit-mid-${nic}" value="${mid}"></div>
-            <div><b>WhatsApp:</b> <input type="text" id="edit-wa-${nic}" value="${wa}"></div>
-            <div><b>Balance:</b> <input type="text" id="edit-bal-${nic}" value="${bal}"></div>
-        `;
-        document.getElementById(`save-${nic}`).style.display = 'block';
+        const balSpan = document.querySelector(`#info-${nic} .v-bal`);
+        const currentBal = balSpan.innerText;
+        balSpan.innerHTML = `<input type="text" id="inp-bal-${nic}" value="${currentBal}" style="width:60px; padding:2px; margin:0">`;
+        document.getElementById(`save-${nic}`).style.display = "inline-block";
     }
 
     async function saveEdit(nic) {
-        const newName = document.getElementById(`edit-name-${nic}`).value;
-        const newMid = document.getElementById(`edit-mid-${nic}`).value;
-        const newWa = document.getElementById(`edit-wa-${nic}`).value;
-        const newBal = document.getElementById(`edit-bal-${nic}`).value;
-
-        await database.ref('members/' + nic).update({
-            name: newName,
-            memberId: newMid,
-            whatsapp: newWa,
-            balance: newBal
-        });
-
-        alert("සාමාජිකයාගේ විස්තර සාර්ථකව යාවත්කාලීන කරන ලදී!");
+        const newBal = document.getElementById(`inp-bal-${nic}`).value;
+        await database.ref('members/' + nic).update({ balance: newBal });
+        alert("Balance Updated!");
     }
 </script>
 
