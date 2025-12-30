@@ -213,14 +213,14 @@
       color:rgba(226,232,240,.75);
       font-size:.70rem;
       line-height:1.7;
-text-align:center; /* ✅ ADD THIS */
+      text-align:center;
     }
 
     @media(max-width:720px){
       .grid{grid-template-columns:repeat(2, minmax(0, 1fr));}
     }
 
-    /* ✅ Mobile: make tiles a bit smaller (ONLY tiles/text/icons) */
+    /* ✅ Mobile: make tiles a bit smaller */
     @media(max-width:520px){
       .wrap{padding-left:14px; padding-right:14px;}
       .grid{gap:12px;}
@@ -230,21 +230,21 @@ text-align:center; /* ✅ ADD THIS */
       .t2{font-size:.74rem; margin-top:3px;}
     }
 
-.free-highlight{
-  color: var(--accent);
-  font-weight: 800;
-}
+    .free-highlight{
+      color: var(--accent);
+      font-weight: 800;
+    }
 
-/* ✅ Notice Bar Style */
-.live-notice {
-  background: rgba(15, 23, 42, 0.5);
-  border: 1px solid var(--border);
-  padding: 10px;
-  border-radius: 12px;
-  margin: 10px 0;
-  color: var(--accent);
-  font-weight: bold;
-}
+    /* ✅ Notice Bar Style */
+    .live-notice {
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid var(--border);
+      padding: 10px;
+      border-radius: 12px;
+      margin: 10px 0;
+      color: var(--accent);
+      font-weight: bold;
+    }
 
   </style>
 </head>
@@ -262,22 +262,16 @@ text-align:center; /* ✅ ADD THIS */
 
   <div class="wrap">
     <section class="intro">
-      <h2><span>Freelancice Work</span> <span class="accent">ඔන්ලයින් මුදල් උපයන්න
-
-</span> <span class="accent">සුපිරිම තැන</span></h2>
+      <h2><span>Freelancice Work</span> <span class="accent">ඔන්ලයින් මුදල් උපයන්න</span> <span class="accent">සුපිරිම තැන</span></h2>
       <p>
-        Facebook, WhatsApp, Youtube, Instagram, Tiktok සහ Google හරහා මුදල් උපයන්න. ඔබට අවශ්‍ය එකම සුදුසුකම සිංහල අකුරු කියවීමේ හැකියාව සමගින් ඔරිජිනල් ෆේස්බුක් ගිණුමක් සහ ශ්‍රී ලංකාවේ වට්ස් ඇප් අංකයකි. <span class="free-highlight">100%ක් නොමිළේ සම්බන්ධ විය හැක.š.</span>
+        Facebook, WhatsApp, Youtube, Instagram, Tiktok සහ Google හරහා මුදල් උපයන්න. ඔබට අවශ්‍ය එකම සුදුසුකම සිංහල අකුරු කියවීමේ හැකියාව සමගින් ඔරිජිනල් ෆේස්බුක් ගිණුමක් සහ ශ්‍රී ලංකාවේ වට්ස් ඇප් අංකයකි. <span class="free-highlight">100%ක් නොමිළේ සම්බන්ධ විය හැක.</span>
       </p><br>
-<p>පහත සියලුම අයිකන් ක්ලික් කර සියල්ල සිහි බුද්ධියෙන්, අවබෝධයෙන් කියවා අවසන් වූ පසුව පමණක් ලියාපදිංචි වන්න. අප ආයතනයට සම්බන්ධ වීමට සහ ලියාපදිංචි වීමට ප්‍රථම අනිවාර්යයෙන්ම පහත Voice අහන්න.
-
-
-</p>
+     
     </section>
 
-<div class="live-notice">
-  <marquee id="noticeText" scrollamount="5">Loading Notice...</marquee>
-</div>
-
+    <div class="live-notice">
+      <marquee id="noticeText" scrollamount="5">Loading Notice...</marquee>
+    </div>
 
     <div class="grid" id="appGrid">
 
@@ -288,62 +282,56 @@ text-align:center; /* ✅ ADD THIS */
       <a class="tile" href="traning_group.html"><span class="icon">groups</span><div class="text"><div class="t1">Job Training Groups</div><div class="t2">ලියාපදිංචි වු අය පමණක් පමණක් සමිබන්ධ විය යුතු ජොබි පුහුණු ගෘප්.</div></div></a>
       <a class="tile" href="ewallet.html"><span class="icon">account_balance_wallet</span><div class="text"><div class="t1">eWallet</div><div class="t2">ඔබගේ කොමිස්, වැටුප්, ආදායමි බලන්න</div></div></a>
       
-      <a class="tile" href="leaderboard.html"><span class="icon">leaderboard</span><div class="text"><div class="t1">Active Leadbord</div><div class="t2">ක්‍රියාකාරී සාමාජිකයන්ගේ ලැයිස්තුව.</div></div></a>
-      
-      <a class="tile" href="admin_dash.html" onclick="checkAdminAccess()"><span class="icon">admin_panel_settings</span><div class="text"><div class="t1">Admin Dashbord</div><div class="t2">අයිතිකාරයාට පමණයි.</div></div></a>
+      <a class="tile" href="profile.html"><span class="icon">person_check</span><div class="text"><div class="t1">Member Access</div><div class="t2">ඔබගේ Profile එක සහ KYC තොරතුරු මෙතැනින්.</div></div></a>
 
+      <a class="tile" href="leaderboard.html"><span class="icon">leaderboard</span><div class="text"><div class="t1">Active Leadbord</div><div class="t2">ක්‍රියාකාරී සාමාජිකයන්ගේ ලැයිස්තුව.</div></div></a>
+      <a class="tile" href="admin_dash.html" onclick="checkAdminAccess()"><span class="icon">admin_panel_settings</span><div class="text"><div class="t1">Admin Dashbord</div><div class="t2">අයිතිකාරයාට පමණයි.</div></div></a>
       <a class="tile" href="faq.html"><span class="icon">help</span><div class="text"><div class="t1">FAQ</div><div class="t2">නිතර අසන ප්‍රශ්න - කියවා අවබෝධයෙන් සමිබන්ධ  වන්න. </div></div></a>
       <a class="tile" href="task.html"><span class="icon">Paid</span><div class="text"><div class="t1">Earn Money</div><div class="t2">ඔබගේ කොමිස්, වැටුප්, ආදායමි බලන්න</div></div></a>   
 
-<a class="tile" href="affiliatemarketing.html">
-  <span class="icon">paid</span>
-  <div class="text">
-    <div class="t1">Earn Money</div>
-    <div class="t2">පෝස්ටි share හරහා (Sales)මුදල් හොයමු.</div>
-  </div>
-</a>
-<a class="tile" href="memberideas/index.html">
-  <span class="icon">lightbulb</span>
-  <div class="text">
-    <div class="t1">Member Ideas</div>
-    <div class="t2">සාමාජිකයන්ගේ අදහස්.</div>
-  </div>
-</a>
-       <a class="tile" href="companyintro.html"><span class="icon">apartment</span><div class="text"><div class="t1">Company</div><div class="t2">අප ආයතනය හා අධ්‍යක්ෂකවරයා</div></div></a>
-
-
-
+      <a class="tile" href="affiliatemarketing.html">
+        <span class="icon">paid</span>
+        <div class="text">
+          <div class="t1">Earn Money</div>
+          <div class="t2">පෝස්ටි share හරහා (Sales)මුදල් හොයමු.</div>
+        </div>
+      </a>
+      <a class="tile" href="memberideas/index.html">
+        <span class="icon">lightbulb</span>
+        <div class="text">
+          <div class="t1">Member Ideas</div>
+          <div class="t2">සාමාජිකයන්ගේ අදහස්.</div>
+        </div>
+      </a>
+      <a class="tile" href="companyintro.html"><span class="icon">apartment</span><div class="text"><div class="t1">Company</div><div class="t2">අප ආයතනය හා අධ්‍යක්ෂකවරයා</div></div></a>
       <a class="tile" href="https://chat.whatsapp.com/Jete114HEg81ToVd3nzo85" target="_blank" rel="noopener">
-<span class="icon">forum</span>
+        <span class="icon">forum</span>
         <div class="text"><div class="t1">Chat Support</div><div class="t2">චැටි සහය ලබා ගන්න</div></div>
       </a>
-
       <a class="tile" href="https://web.facebook.com/BusinessHUBSriLanka.lk" target="_blank" rel="noopener">
         <span class="icon">public</span>
         <div class="text"><div class="t1">Company Facebook</div><div class="t2">ආයතනික facebook පිටුව.</div></div>
       </a>
-<a class="tile" href="underconstruction.html"><span class="icon">gavel</span><div class="text"><div class="t1">Company Rules</div><div class="t2">ආයතනික නිතිරිති.</div></div></a>
-          <a class="tile" href="underconstruction.html"><span class="icon">groups_2</span><div class="text"><div class="t1">Our Staff</div><div class="t2">අපගේ කාර්ය මණ්ඩලය.</div></div></a>
+      <a class="tile" href="underconstruction.html"><span class="icon">gavel</span><div class="text"><div class="t1">Company Rules</div><div class="t2">ආයතනික නිතිරිති.</div></div></a>
+      <a class="tile" href="underconstruction.html"><span class="icon">groups_2</span><div class="text"><div class="t1">Our Staff</div><div class="t2">අපගේ කාර්ය මණ්ඩලය.</div></div></a>
       <a class="tile" href="underconstruction.html"><span class="icon">handshake</span><div class="text"><div class="t1">Join with Us</div><div class="t2">සමිබන්ධි කරන නිළධාරින් ලෙන සමිබන්ධ වෙන්න.</div></div></a>
-      <a class="tile" href="underconstruction.html"><span class="icon">settings_suggest</span><div class="text"><div class="t1">Company Services</div><div class="t2">ආයතනයෙන් ලබා දෙන තාක්ෂණික සේවා.</div></div></a>
+      <a class="tile" href="underconstruction.html"><span class="icon">settings_suggest</span><div class="text"><div class="t1">Company Services</div><div class="t2">ආයතනයෙන් ලබා දෙන තාක්ෂණික සේවා.</div></div></a>
       <a class="tile" href="notice.html"><span class="icon">campaign</span><div class="text"><div class="t1">Notice</div><div class="t2">ආයතනික නිවෙිිදන - අනිවාර්යෙන් හැමදාම බලන්න</div></div></a>
-<a class="tile" href="underconstruction.html">
-  <span class="icon">phone_in_talk</span>
-  <div class="text">
-    <div class="t1">Contact Director</div>
-    <div class="t2">අධ්‍යක්ෂක සමඟ කතා කරන්න</div>
-  </div>
-</a>
-      
-        
+      <a class="tile" href="underconstruction.html">
+        <span class="icon">phone_in_talk</span>
+        <div class="text">
+          <div class="t1">Contact Director</div>
+          <div class="t2">අධ්‍යක්ෂක සමඟ කතා කරන්න</div>
+        </div>
+      </a>
 
     </div>
 
     <hr class="divider">
 
     <footer>
-      NH TECH ACCDAMY  (Pvt) Ltd (Business HUB Sri Lanka) තාක්ෂණික ආයතනයේ “Freelance Work” ඔන්ලයින් රැකියා ව්‍යාපෘතියේ තවත් එක් සමාජ මෙහෙවරකි. © Copyright 2006-2026 – සියලුම හිමිකම් ඇවිරිණි.
-නදිල් හංසජ මහතා විසින් සිදුකරන ලද නිර්මාණයකි
+      NH TECH ACCDAMY (Pvt) Ltd (Business HUB Sri Lanka) තාක්ෂණික ආයතනයේ “Freelance Work” ඔන්ලයින් රැකියා ව්‍යාපෘතියේ තවත් එක් සමාජ මෙහෙවරකි. © Copyright 2006-2026 – සියලුම හිමිකම් ඇවිරිණි.
+      නදිල් හංසජ මහතා විසින් සිදුකරන ලද නිර්මාණයකි
     </footer>
   </div>
 
@@ -369,7 +357,8 @@ text-align:center; /* ✅ ADD THIS */
       if (id === "FW0001") {
         window.location.href = "admin_dash.html"; 
       } else {
-        alert("සමාවන්න, මෙම කොටසට ඇතුළු වීමට අවසර ඇත්තේ FW0001 හට පමණි.");
+        alert("සමාවන්න, මෙම කොටසට ඇතුළු වීමට අවසර ඇත්තේ admin හට පමණි.");
+        event.preventDefault(); // Prevents navigation if ID is wrong
       }
     }
 
@@ -392,7 +381,10 @@ text-align:center; /* ✅ ADD THIS */
       }
 
       tiles.forEach(t=>{
-        t.addEventListener("click",()=>{
+        t.addEventListener("click",(e)=>{
+          // If it's admin dash, the prompt will handle it
+          if(t.getAttribute('href') === 'admin_dash.html') return;
+
           tiles.forEach(x=>x.classList.remove("active"));
           t.classList.add("active");
           localStorage.setItem(KEY, norm(t.href));
