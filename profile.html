@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="utf-8">
+    <title>Member Access - Freelance Work</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+    <style>
+        :root {
+            --bg: #0b1220;
+            --card: #1e293b;
+            --accent: #38bdf8;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --green: #22c55e;
+            --red: #ef4444;
+        }
+
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            font-family: 'Segoe UI', sans-serif; 
+            margin: 0; 
+            padding: 20px; 
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        /* Login Box Styles */
+        .auth-container {
+            background: var(--card);
+            padding: 30px;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        /* Profile Styles */
+        .profile-container {
+            width: 100%;
+            max-width: 450px;
+            display: none; /* පසුව පෙන්වීමට */
+        }
+
+        .user-card {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 24px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .profile-img {
+            width: 100px; height: 100px;
+            border-radius: 50%;
+            border: 3px solid var(--accent);
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 1px solid #334155;
+            background: #0b1220;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        button {
+            background: var(--accent);
+            color: #000;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        .kyc-box {
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 15px;
+            margin-top: 20px;
+            border: 1px dashed var(--muted);
+        }
+
+        .verified-badge { color: var(--accent); vertical-align: middle; }
+    </style>
+</head>
+<body>
+
+    <div id="loginSection" class="auth-container">
+        <span class="material-symbols-outlined" style="font-size: 50px; color: var(--accent);">account_circle</span>
+        <h2>Member Login</h2>
+        <input type="text" id="loginName" placeholder="ඔබේ නම ඇතුළත් කරන්න">
+        <input type="text" id="loginID" placeholder="Member ID (උදා: FWXXXX)">
+        <button onclick="userLogin()">පද්ධතියට ඇතුළු වන්න</button>
+        <p id="loginError" style="color: var(--red); font-size: 0.8rem; margin-top: 10px;"></p>
+    </div>
+
+    <div id="profileSection" class="profile-container">
+        <div class="user-card">
+            <div style="text-align: right;">
+                <button onclick="logout()" style="width: auto; padding: 5px 10px; background: var(--red); color: white; font-size: 0.7rem;">Logout</button>
+            </div>
+            <img src="https://via.placeholder.com/100" id="userPhoto" class="profile-img">
+            <h2 id="userNameDisplay">Loading...</h2>
+            <p id="userIDDisplay" style="color: var(--muted); font-size: 0.9rem; margin-top: -10px;"></p>
+            
+            <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 15px; margin: 20px 0;">
+                <span style="display: block; font-size: 0.8rem; color: var(--muted);">මුළු ඉපයීම (Current Balance)</span>
+                <span style="font-size: 1.8rem; font-weight: bold; color: var(--green);">Rs. <span id="userBalanceDisplay">0.00</span></span>
+            </div>
+
+            <div class="kyc-box" id="kycArea">
+                <h4 style="margin: 0 0 10px 0;">🆔 Identity Verification</h4>
+                <p style="font-size: 0.75rem; color: var(--muted); margin-bottom: 15px;">මුදල් ලබා ගැනීමට ප්‍රථම ඔබගේ NIC ඡායාරූපය එවන්න.</p>
+                <input type="file" id="nicFile" accept="image/*" style="display: none;" onchange="previewNIC(event)">
+                <button onclick="document.getElementById('nicFile').click()" style="background: transparent; border: 1px solid var(--accent); color: var(--accent);">ඡායාරූපය තෝරන්න</button>
+                <img id="nicPreview" style="width: 100%; display: none; margin-top: 10px; border-radius: 10px;">
+                <button id="uploadBtn" onclick="submitKYC()" style="background: var(--green); color: white; display: none;">Submit NIC</button>
+                <div id="kycStatus" style="font-size: 0.8rem; margin-top: 10px;"></div>
+            </div>
+        </div>
+    </div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyB01A6SNm1wW7YVDzHjNGFSZIZekMQ4Wo0",
+        databaseURL: "https://frelance-work-default-rtdb.asia-southeast1.firebasedatabase.app"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    // 1. Login Function
+    function userLogin() {
+        const inputName = document.getElementById('loginName').value.trim();
+        const inputID = document.getElementById('loginID').value.trim();
+        const errorMsg = document.getElementById('loginError');
+
+        if(!inputName || !inputID) {
+            errorMsg.innerText = "කරුණාකර නම සහ Member ID ඇතුළත් කරන්න.";
+            return;
+        }
+
+        // Firebase එකේ සාමාජිකයින් පරීක්ෂා කිරීම
+        database.ref('members').once('value', (snapshot) => {
+            const members = snapshot.val();
+            let foundUser = null;
+            let userNIC = null;
+
+            for(let nic in members) {
+                if(members[nic].memberId === inputID) {
+                    foundUser = members[nic];
+                    userNIC = nic;
+                    break;
+                }
+            }
+
+            if(foundUser) {
+                // Login සාර්ථකයි - දත්ත Local Storage එකේ තැබීම
+                localStorage.setItem("loggedNIC", userNIC);
+                localStorage.setItem("loggedName", inputName);
+                showProfile(userNIC);
+            } else {
+                errorMsg.innerText = "වැරදි Member ID එකකි. කරුණාකර නැවත පරීක්ෂා කරන්න.";
+            }
+        });
+    }
+
+    // 2. Profile පෙන්වීම
+    function showProfile(nic) {
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('profileSection').style.display = 'block';
+
+        database.ref('members/' + nic).on('value', (snapshot) => {
+            const data = snapshot.val();
+            if(data) {
+                const verifiedIcon = data.verified ? '<span class="material-symbols-outlined verified-badge">verified</span>' : '';
+                document.getElementById('userNameDisplay').innerHTML = data.name + " " + verifiedIcon;
+                document.getElementById('userIDDisplay').innerText = "Member ID: " + data.memberId;
+                document.getElementById('userBalanceDisplay').innerText = data.balance || "0.00";
+                if(data.photo) document.getElementById('userPhoto').src = data.photo;
+
+                if(data.identity_verified) {
+                    document.getElementById('kycArea').innerHTML = "<b style='color:var(--green)'>✅ Identity Verified</b>";
+                }
+            }
+        });
+    }
+
+    // 3. KYC Upload
+    function previewNIC(event) {
+        const reader = new FileReader();
+        reader.onload = () => {
+            const img = document.getElementById('nicPreview');
+            img.src = reader.result;
+            img.style.display = 'block';
+            document.getElementById('uploadBtn').style.display = 'block';
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+
+    async function submitKYC() {
+        const nic = localStorage.getItem("loggedNIC");
+        const file = document.getElementById('nicFile').files[0];
+        const status = document.getElementById('kycStatus');
+
+        status.innerText = "Uploading...";
+        const formData = new FormData();
+        formData.append("image", file);
+
+        try {
+            const res = await fetch("https://api.imgbb.com/1/upload?key=711ab8cc09ab1cd9d14c973336672921", {
+                method: "POST",
+                body: formData
+            });
+            const data = await res.json();
+            if(data.success) {
+                await database.ref('kyc_requests/' + nic).set({
+                    nic: nic,
+                    nic_image: data.data.url,
+                    status: "Pending",
+                    submittedAt: new Date().toLocaleString()
+                });
+                status.innerHTML = "<span style='color:var(--green)'>Done! Admin will check soon.</span>";
+                document.getElementById('uploadBtn').style.display = 'none';
+            }
+        } catch(e) { status.innerText = "Error: " + e.message; }
+    }
+
+    function logout() {
+        localStorage.clear();
+        location.reload();
+    }
+
+    // කලින් Login වී සිටීදැයි පරීක්ෂා කිරීම
+    window.onload = () => {
+        const savedNIC = localStorage.getItem("loggedNIC");
+        if(savedNIC) showProfile(savedNIC);
+    };
+</script>
+</body>
+</html>
