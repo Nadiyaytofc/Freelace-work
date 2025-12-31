@@ -16,7 +16,6 @@
       font-display:swap;
     }
 
-    /* ✅ Fix horizontal scrolling globally */
     *,*::before,*::after{box-sizing:border-box;}
     html,body{margin:0;padding:0;max-width:100%;overflow-x:hidden;}
     body{
@@ -35,217 +34,58 @@
       --border:rgba(148,163,184,.25);
       --muted:rgba(226,232,240,.72);
       --shadow:0 18px 60px rgba(0,0,0,.35);
+      --bank-color:#10b981; 
     }
 
-    .wrap{
-      width:100%;
-      max-width:1100px;
-      margin:0 auto;
-      padding:5px 22px 24px;
-    }
+    .wrap{ width:100%; max-width:1100px; margin:0 auto; padding:5px 22px 24px; }
 
-    /* ✅ Sticky header (strong + reliable) */
     .topbar{
-      position: sticky;
-      position: -webkit-sticky;
-      top: 0;
-      z-index: 9999;
+      position: sticky; top: 0; z-index: 9999;
       background:linear-gradient(180deg, rgba(10,16,28,.98), rgba(10,16,28,.80));
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
       border-bottom:1px solid rgba(148,163,184,.12);
     }
-    .topbarInner{
-      max-width:1100px;
-      margin:0 auto;
-      padding:14px 22px;
-      display:flex;
-      align-items:center;
-      gap:14px;
-    }
+    .topbarInner{ max-width:1100px; margin:0 auto; padding:14px 22px; display:flex; align-items:center; gap:14px; }
 
     .logo{
-      width:48px;
-      height:48px;
-      border-radius:18px;
+      width:48px; height:48px; border-radius:18px;
       background:radial-gradient(circle at top,#0f172a,#020617);
-      box-shadow:0 0 0 2px rgba(15,23,42,.7);
       border:2px solid rgba(56,189,248,.40);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:var(--accent);
-      font-weight:900;
-      letter-spacing:.5px;
-      flex:0 0 auto;
-      font-size:22px;
+      display:flex; align-items:center; justify-content:center;
+      color:var(--accent); font-weight:900; font-size:22px;
     }
-    .brand h1{
-      margin:0;
-      font-size:1.1rem;
-      letter-spacing:.8px;
-      font-weight:700;
-    }
-    .brand small{
-      display:block;
-      margin-top:0px;
-      color:rgba(226,232,240,.70);
-      font-size:.8rem;
-    }
+    .brand h1{ margin:0; font-size:1.1rem; letter-spacing:.8px; font-weight:700; }
+    .brand small{ display:block; color:rgba(226,232,240,.70); font-size:.8rem; }
 
-    /* Intro area */
-    .intro{
-      padding:18px 0 12px;
-    }
-
-    .intro h2{
-      font-size:2.0rem;   /* desktop */
-      margin:0 0 10px;
-      line-height:1.12;
-      font-weight:900;
-      letter-spacing:.2px;
-    }
-
-    @media (max-width: 520px){
-      .intro h2{
-        font-size:1.2rem;
-        margin:0 0 5px;
-        line-height:1.12;
-        font-weight:700;
-        letter-spacing:.2px;
-      }
-    }
-
+    .intro{ padding:18px 0 12px; }
+    .intro h2{ font-size:2.0rem; margin:0 0 10px; line-height:1.12; font-weight:900; }
     .intro h2 .accent{color:var(--accent);}
-    .intro p{
-      margin:0;
-      color:var(--muted);
-      font-size:0.8rem;
-      line-height:1.75;
+    .intro p{ margin:0; color:var(--muted); font-size:0.8rem; line-height:1.75; }
+
+    .bank-notice {
+      background: rgba(16, 185, 129, 0.1);
+      border-left: 4px solid var(--bank-color);
+      padding: 12px; margin-top: 15px; border-radius: 0 8px 8px 0;
+      font-size: 0.85rem; color: #d1fae5;
     }
 
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(3, minmax(0, 1fr));
-      gap:14px;
-      margin-top:12px;
-    }
-
+    .grid{ display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:14px; margin-top:12px; }
     .tile{
-      display:flex;
-      gap:14px;
-      align-items:flex-start;
-      padding:16px 14px;
-      border-radius:18px;
+      display:flex; gap:14px; align-items:flex-start; padding:16px 14px; border-radius:18px;
       background:linear-gradient(180deg,var(--card2),var(--card));
-      border:1px solid var(--border);
-      text-decoration:none;
-      color:inherit;
-      box-shadow:var(--shadow);
+      border:1px solid var(--border); text-decoration:none; color:inherit; box-shadow:var(--shadow);
       transition:.2s ease;
-      outline:none;
-      min-width:0;
-      position:relative;
     }
-    .tile:hover{transform:translateY(-2px);}
-    .tile:active{transform:translateY(0px);}
-
-    /* ✅ Glow highlight (last visited / selected) */
-    a.tile.active{
-      border-color:rgba(56,189,248,.95);
-      box-shadow:
-        0 0 0 2px rgba(56,189,248,.22),
-        0 0 18px rgba(56,189,248,.22),
-        0 0 42px rgba(56,189,248,.14),
-        var(--shadow);
-    }
-
-    /* Small glow pulse when page loads */
-    a.tile.active::after{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      border-radius:20px;
-      pointer-events:none;
-      box-shadow:0 0 0 0 rgba(56,189,248,.0);
-      animation: glowPulse 1.1s ease-out 1;
-    }
-
-    @keyframes glowPulse{
-      0%   { box-shadow:0 0 0 0 rgba(56,189,248,.0); }
-      30%  { box-shadow:0 0 22px 6px rgba(56,189,248,.18); }
-      100% { box-shadow:0 0 0 0 rgba(56,189,248,.0); }
-    }
-
-    .icon{
-      font-family:"Material Symbols Outlined";
-      font-size:44px;
-      line-height:1;
-      color:var(--accent);
-      flex:0 0 auto;
-      margin-top:2px;
-    }
+    .tile:hover{transform:translateY(-2px); border-color: var(--accent);}
+    
+    .icon{ font-family:"Material Symbols Outlined"; font-size:44px; color:var(--accent); flex:0 0 auto; }
     .text{min-width:0;}
-    .t1{
-      font-size:.95rem;
-      font-weight:800;
-      line-height:1.2;
-      word-break:break-word;
-    }
-    .t2{
-      font-size:.8rem;
-      color:var(--muted);
-      margin-top:4px;
-      line-height:1.3;
-      word-break:break-word;
-    }
+    .t1{ font-size:.95rem; font-weight:800; line-height:1.2; }
+    .t2{ font-size:.8rem; color:var(--muted); margin-top:4px; line-height:1.3; }
 
-    .divider{
-      margin:18px 0 14px;
-      height:1px;
-      width:100%;
-      background:rgba(148,163,184,.18);
-      border:0;
-    }
-
-    footer{
-      padding:0 0 10px;
-      color:rgba(226,232,240,.75);
-      font-size:.70rem;
-      line-height:1.7;
-      text-align:center;
-    }
-
-    @media(max-width:720px){
-      .grid{grid-template-columns:repeat(2, minmax(0, 1fr));}
-    }
-
-    /* ✅ Mobile: make tiles a bit smaller */
-    @media(max-width:520px){
-      .wrap{padding-left:14px; padding-right:14px;}
-      .grid{gap:12px;}
-      .tile{padding:12px 12px; gap:10px; border-radius:16px;}
-      .icon{font-size:38px;}
-      .t1{font-size:.88rem;}
-      .t2{font-size:.74rem; margin-top:3px;}
-    }
-
-    .free-highlight{
-      color: var(--accent);
-      font-weight: 800;
-    }
-
-    /* ✅ Notice Bar Style */
-    .live-notice {
-      background: rgba(15, 23, 42, 0.5);
-      border: 1px solid var(--border);
-      padding: 10px;
-      border-radius: 12px;
-      margin: 10px 0;
-      color: var(--accent);
-      font-weight: bold;
-    }
-
+    .live-notice { background: rgba(15, 23, 42, 0.5); border: 1px solid var(--border); padding: 10px; border-radius: 12px; margin: 10px 0; color: var(--accent); font-weight: bold; }
+    footer{ padding:20px 0; color:var(--muted); font-size:.70rem; text-align:center; border-top: 1px solid var(--border); }
+    @media(max-width:720px){ .grid{grid-template-columns:repeat(2, minmax(0, 1fr));} }
   </style>
 </head>
 
@@ -262,11 +102,12 @@
 
   <div class="wrap">
     <section class="intro">
-      <h2><span>Freelancice Work</span> <span class="accent">ඔන්ලයින් මුදල් උපයන්න</span> <span class="accent">සුපිරිම තැන</span></h2>
-      <p>
-        Facebook, WhatsApp, Youtube, Instagram, Tiktok සහ Google හරහා මුදල් උපයන්න. ඔබට අවශ්‍ය එකම සුදුසුකම සිංහල අකුරු කියවීමේ හැකියාව සමගින් ඔරිජිනල් ෆේස්බුක් ගිණුමක් සහ ශ්‍රී ලංකාවේ වට්ස් ඇප් අංකයකි. <span class="free-highlight">100%ක් නොමිළේ සම්බන්ධ විය හැක.</span>
-      </p><br>
-     
+      <h2><span>Freelancice Work</span> <span class="accent">ඔන්ලයින් මුදල් උපයන්න</span></h2>
+      <p>Facebook, WhatsApp, Youtube, Instagram, Tiktok සහ Google හරහා මුදල් උපයන්න. ඔබට අවශ්‍ය එකම සුදුසුකම සිංහල අකුරු කියවීමේ හැකියාව සමගින් ඔරිජිනල් ෆේස්බුක් ගිණුමක් සහ ශ්‍රී ලංකාවේ වට්ස් ඇප් අංකයකි.</p>
+
+      <div class="bank-notice">
+        <b>💡 දැනුම්දීම:</b> Freelance work එකට register වූ පසු ඔබට මුදල් ලබාගැනීමට හෝ withdraw කිරීම සඳහා පහත දී ඇති <b>Bank Register</b> කියන icon එකට ගොස් register වෙන්න.
+      </div>
     </section>
 
     <div class="live-notice">
@@ -274,70 +115,40 @@
     </div>
 
     <div class="grid" id="appGrid">
-
-      <a class="tile" href="intro.html"><span class="icon">home</span><div class="text"><div class="t1">Basic Info</div><div class="t2">මුලික විස්තර හා ආදායමි  ඉපැයුමි ක්‍රම</div></div></a>
-      <a class="tile" href="instructions.html"><span class="icon">menu_book</span><div class="text"><div class="t1">Instructions</div><div class="t2">ලියාපදිංචි විමට පෙර තිබිය යුතු උපදෙස්.</div></div></a>
+      <a class="tile" href="intro.html"><span class="icon">home</span><div class="text"><div class="t1">Basic Info</div><div class="t2">මුලික විස්තර හා ආදායමි ක්‍රම</div></div></a>
+      <a class="tile" href="instructions.html"><span class="icon">menu_book</span><div class="text"><div class="t1">Instructions</div><div class="t2">ලියාපදිංචි විමට පෙර උපදෙස්.</div></div></a>
       <a class="tile" href="register.html"><span class="icon">how_to_reg</span><div class="text"><div class="t1">Register</div><div class="t2">ආදායමි ඉපැයිමට ලියාපදිංචි විම.</div></div></a>
-      <a class="tile" href="member-id.html"><span class="icon">badge</span><div class="text"><div class="t1">Member ID</div><div class="t2">ලියාපදිංචි වු පසු ඔබෙි සාමාජික අංකය බලන්න.</div></div></a>
-      <a class="tile" href="traning_group.html"><span class="icon">groups</span><div class="text"><div class="t1">Job Training Groups</div><div class="t2">ලියාපදිංචි වු අය පමණක් පමණක් සමිබන්ධ විය යුතු ජොබි පුහුණු ගෘප්.</div></div></a>
-      <a class="tile" href="ewallet.html"><span class="icon">account_balance_wallet</span><div class="text"><div class="t1">eWallet</div><div class="t2">ඔබගේ කොමිස්, වැටුප්, ආදායමි බලන්න</div></div></a>
-      
-      <a class="tile" href="profile.html"><span class="icon">person_check</span><div class="text"><div class="t1">Member Access</div><div class="t2">ඔබගේ Profile එක සහ KYC තොරතුරු මෙතැනින්.</div></div></a>
 
+      <a class="tile" href="https://banking-system-drab-psi.vercel.app/" target="_blank">
+        <span class="icon" style="color: var(--bank-color);">account_balance</span>
+        <div class="text">
+          <div class="t1" style="color: var(--bank-color);">Bank Register</div>
+          <div class="t2">මුදල් ලබාගැනීමට බැංකු පද්ධතියේ ලියාපදිංචි වන්න.</div>
+        </div>
+      </a>
+
+      <a class="tile" href="member-id.html"><span class="icon">badge</span><div class="text"><div class="t1">Member ID</div><div class="t2">සාමාජික අංකය බලන්න.</div></div></a>
+      <a class="tile" href="traning_group.html"><span class="icon">groups</span><div class="text"><div class="t1">Job Training Groups</div><div class="t2">ජොබි පුහුණු ගෘප්.</div></div></a>
+      <a class="tile" href="ewallet.html"><span class="icon">account_balance_wallet</span><div class="text"><div class="t1">eWallet</div><div class="t2">කොමිස්, වැටුප්, ආදායමි බලන්න</div></div></a>
+      <a class="tile" href="profile.html"><span class="icon">person_check</span><div class="text"><div class="t1">Member Access</div><div class="t2">ඔබගේ Profile එක මෙතැනින්.</div></div></a>
       <a class="tile" href="leaderboard.html"><span class="icon">leaderboard</span><div class="text"><div class="t1">Active Leadbord</div><div class="t2">ක්‍රියාකාරී සාමාජිකයන්ගේ ලැයිස්තුව.</div></div></a>
       <a class="tile" href="admin_dash.html" onclick="checkAdminAccess()"><span class="icon">admin_panel_settings</span><div class="text"><div class="t1">Admin Dashbord</div><div class="t2">අයිතිකාරයාට පමණයි.</div></div></a>
-      <a class="tile" href="faq.html"><span class="icon">help</span><div class="text"><div class="t1">FAQ</div><div class="t2">නිතර අසන ප්‍රශ්න - කියවා අවබෝධයෙන් සමිබන්ධ  වන්න. </div></div></a>
-      <a class="tile" href="task.html"><span class="icon">Paid</span><div class="text"><div class="t1">Earn Money</div><div class="t2">ඔබගේ කොමිස්, වැටුප්, ආදායමි බලන්න</div></div></a>   
-
-      <a class="tile" href="affiliatemarketing.html">
-        <span class="icon">paid</span>
-        <div class="text">
-          <div class="t1">Earn Money</div>
-          <div class="t2">පෝස්ටි share හරහා (Sales)මුදල් හොයමු.</div>
-        </div>
-      </a>
-      <a class="tile" href="memberideas/index.html">
-        <span class="icon">lightbulb</span>
-        <div class="text">
-          <div class="t1">Member Ideas</div>
-          <div class="t2">සාමාජිකයන්ගේ අදහස්.</div>
-        </div>
-      </a>
-      <a class="tile" href="companyintro.html"><span class="icon">apartment</span><div class="text"><div class="t1">Company</div><div class="t2">අප ආයතනය හා අධ්‍යක්ෂකවරයා</div></div></a>
-      <a class="tile" href="https://chat.whatsapp.com/Jete114HEg81ToVd3nzo85" target="_blank" rel="noopener">
-        <span class="icon">forum</span>
-        <div class="text"><div class="t1">Chat Support</div><div class="t2">චැටි සහය ලබා ගන්න</div></div>
-      </a>
-      <a class="tile" href="https://web.facebook.com/BusinessHUBSriLanka.lk" target="_blank" rel="noopener">
-        <span class="icon">public</span>
-        <div class="text"><div class="t1">Company Facebook</div><div class="t2">ආයතනික facebook පිටුව.</div></div>
-      </a>
-      <a class="tile" href="underconstruction.html"><span class="icon">gavel</span><div class="text"><div class="t1">Company Rules</div><div class="t2">ආයතනික නිතිරිති.</div></div></a>
-      <a class="tile" href="underconstruction.html"><span class="icon">groups_2</span><div class="text"><div class="t1">Our Staff</div><div class="t2">අපගේ කාර්ය මණ්ඩලය.</div></div></a>
-      <a class="tile" href="underconstruction.html"><span class="icon">handshake</span><div class="text"><div class="t1">Join with Us</div><div class="t2">සමිබන්ධි කරන නිළධාරින් ලෙන සමිබන්ධ වෙන්න.</div></div></a>
-      <a class="tile" href="underconstruction.html"><span class="icon">settings_suggest</span><div class="text"><div class="t1">Company Services</div><div class="t2">ආයතනයෙන් ලබා දෙන තාක්ෂණික සේවා.</div></div></a>
-      <a class="tile" href="notice.html"><span class="icon">campaign</span><div class="text"><div class="t1">Notice</div><div class="t2">ආයතනික නිවෙිිදන - අනිවාර්යෙන් හැමදාම බලන්න</div></div></a>
-      <a class="tile" href="underconstruction.html">
-        <span class="icon">phone_in_talk</span>
-        <div class="text">
-          <div class="t1">Contact Director</div>
-          <div class="t2">අධ්‍යක්ෂක සමඟ කතා කරන්න</div>
-        </div>
-      </a>
-
+      <a class="tile" href="faq.html"><span class="icon">help</span><div class="text"><div class="t1">FAQ</div><div class="t2">නිතර අසන ප්‍රශ්න. </div></div></a>
+      <a class="tile" href="task.html"><span class="icon">Paid</span><div class="text"><div class="t1">Earn Money</div><div class="t2">දෛනික වැඩ අවස්ථා බලන්න.</div></div></a>   
+      <a class="tile" href="affiliatemarketing.html"><span class="icon">paid</span><div class="text"><div class="t1">Affiliate Marketing</div><div class="t2">පෝස්ටි share හරහා මුදල් හොයමු.</div></div></a>
+      <a class="tile" href="memberideas/index.html"><span class="icon">lightbulb</span><div class="text"><div class="t1">Member Ideas</div><div class="t2">සාමාජිකයන්ගේ අදහස්.</div></div></a>
+      <a class="tile" href="companyintro.html"><span class="icon">apartment</span><div class="text"><div class="t1">Company</div><div class="t2">අප ආයතනය හා අධ්‍යක්ෂක.</div></div></a>
+      <a class="tile" href="https://chat.whatsapp.com/Jete114HEg81ToVd3nzo85" target="_blank"><span class="icon">forum</span><div class="text"><div class="t1">Chat Support</div><div class="t2">සහය ලබා ගන්න</div></div></a>
+      <a class="tile" href="notice.html"><span class="icon">campaign</span><div class="text"><div class="t1">Notice</div><div class="t2">ආයතනික නිවේදන බලන්න.</div></div></a>
     </div>
 
-    <hr class="divider">
-
     <footer>
-      NH TECH ACCDAMY (Pvt) Ltd (Business HUB Sri Lanka) තාක්ෂණික ආයතනයේ “Freelance Work” ඔන්ලයින් රැකියා ව්‍යාපෘතියේ තවත් එක් සමාජ මෙහෙවරකි. © Copyright 2006-2026 – සියලුම හිමිකම් ඇවිරිණි.
-      නදිල් හංසජ මහතා විසින් සිදුකරන ලද නිර්මාණයකි
+      NH TECH ACCDAMY (Pvt) Ltd © 2006-2026 – සියලුම හිමිකම් ඇවිරිණි.
     </footer>
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyB01A6SNm1wW7YVDzHjNGFSZIZekMQ4Wo0",
@@ -346,51 +157,14 @@
     firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
 
-    // Load Notice from Firebase
     database.ref('admin_notice').on('value', (snapshot) => {
       document.getElementById('noticeText').innerText = snapshot.val() || "නිවේදන කිසිවක් නැත.";
     });
 
-    // Admin Access Verification
     function checkAdminAccess() {
-      const id = prompt("කරුණාකර ඔබේ සාමාජික අංකය (Member ID) ඇතුළත් කරන්න:");
-      if (id === "FW0001") {
-        window.location.href = "admin_dash.html"; 
-      } else {
-        alert("සමාවන්න, මෙම කොටසට ඇතුළු වීමට අවසර ඇත්තේ admin හට පමණි.");
-        event.preventDefault(); // Prevents navigation if ID is wrong
-      }
+      const id = prompt("Member ID ඇතුළත් කරන්න:");
+      if (id !== "FW0001") { event.preventDefault(); alert("Admin පමණයි!"); }
     }
-
-    (function(){
-      const KEY = "freelancing_last_tile";
-      const tiles = document.querySelectorAll("#appGrid a.tile");
-
-      function norm(href){
-        try{
-          const u = new URL(href, location.href);
-          return u.origin === location.origin ? (u.pathname + u.search + u.hash) : u.href;
-        }catch(e){ return href; }
-      }
-
-      const last = localStorage.getItem(KEY);
-      if(last){
-        tiles.forEach(t=>{
-          if(norm(t.href) === last) t.classList.add("active");
-        });
-      }
-
-      tiles.forEach(t=>{
-        t.addEventListener("click",(e)=>{
-          // If it's admin dash, the prompt will handle it
-          if(t.getAttribute('href') === 'admin_dash.html') return;
-
-          tiles.forEach(x=>x.classList.remove("active"));
-          t.classList.add("active");
-          localStorage.setItem(KEY, norm(t.href));
-        });
-      });
-    })();
   </script>
 </body>
 </html>
