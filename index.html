@@ -37,8 +37,35 @@
       --bank-color:#10b981; 
     }
 
-    .wrap{ width:100%; max-width:1100px; margin:0 auto; padding:5px 22px 24px; }
+    /* --- Overlay Styles (Error Fixed) --- */
+    #closedOverlay {
+      display:none; position:fixed; top:0; left:0; width:100%; height:100%; 
+      background:#070b14; z-index:10000; flex-direction:column; 
+      justify-content:center; align-items:center; text-align:center; padding:20px; overflow:hidden;
+    }
+    .big-timer {
+      font-size: clamp(3.5rem, 18vw, 7rem); font-weight: 900; color: white; 
+      text-shadow: 0 0 30px rgba(56,189,248,0.6); font-family: monospace; margin: 15px 0;
+    }
+    .pulse-logo-closed {
+      width:90px; height:90px; border-radius:24px; background:radial-gradient(circle at top,#0f172a,#020617);
+      border:3px solid var(--accent); display:flex; align-items:center; justify-content:center;
+      color:var(--accent); font-weight:900; font-size:32px; animation: pulse-glow 2s infinite;
+    }
+    .particle { position:absolute; background:white; border-radius:50%; opacity:0.3; animation: floatUp 10s infinite linear; }
+    @keyframes floatUp {
+      0% { transform: translateY(110vh); opacity: 0; }
+      50% { opacity: 0.4; }
+      100% { transform: translateY(-10vh); opacity: 0; }
+    }
+    @keyframes pulse-glow {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(56,189,248, 0.7); }
+      70% { transform: scale(1.1); box-shadow: 0 0 0 20px rgba(56,189,248, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(56,189,248, 0); }
+    }
+    @keyframes blink-status { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
+    .wrap{ width:100%; max-width:1100px; margin:0 auto; padding:5px 22px 24px; }
     .topbar{
       position: sticky; top: 0; z-index: 9999;
       background:linear-gradient(180deg, rgba(10,16,28,.98), rgba(10,16,28,.80));
@@ -46,43 +73,28 @@
       border-bottom:1px solid rgba(148,163,184,.12);
     }
     .topbarInner{ max-width:1100px; margin:0 auto; padding:14px 22px; display:flex; align-items:center; gap:14px; }
-
     .logo{
-      width:48px; height:48px; border-radius:18px;
-      background:radial-gradient(circle at top,#0f172a,#020617);
-      border:2px solid rgba(56,189,248,.40);
-      display:flex; align-items:center; justify-content:center;
+      width:48px; height:48px; border-radius:18px; background:radial-gradient(circle at top,#0f172a,#020617);
+      border:2px solid rgba(56,189,248,.40); display:flex; align-items:center; justify-content:center;
       color:var(--accent); font-weight:900; font-size:22px;
     }
     .brand h1{ margin:0; font-size:1.1rem; letter-spacing:.8px; font-weight:700; }
     .brand small{ display:block; color:rgba(226,232,240,.70); font-size:.8rem; }
-
     .intro{ padding:18px 0 12px; }
     .intro h2{ font-size:2.0rem; margin:0 0 10px; line-height:1.12; font-weight:900; }
     .intro h2 .accent{color:var(--accent);}
     .intro p{ margin:0; color:var(--muted); font-size:0.8rem; line-height:1.75; }
-
-    .bank-notice {
-      background: rgba(16, 185, 129, 0.1);
-      border-left: 4px solid var(--bank-color);
-      padding: 12px; margin-top: 15px; border-radius: 0 8px 8px 0;
-      font-size: 0.85rem; color: #d1fae5;
-    }
-
+    .bank-notice { background: rgba(16, 185, 129, 0.1); border-left: 4px solid var(--bank-color); padding: 12px; margin-top: 15px; border-radius: 0 8px 8px 0; font-size: 0.85rem; color: #d1fae5; }
     .grid{ display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:14px; margin-top:12px; }
     .tile{
       display:flex; gap:14px; align-items:flex-start; padding:16px 14px; border-radius:18px;
-      background:linear-gradient(180deg,var(--card2),var(--card));
-      border:1px solid var(--border); text-decoration:none; color:inherit; box-shadow:var(--shadow);
-      transition:.2s ease;
+      background:linear-gradient(180deg,var(--card2),var(--card)); border:1px solid var(--border);
+      text-decoration:none; color:inherit; box-shadow:var(--shadow); transition:.2s ease;
     }
     .tile:hover{transform:translateY(-2px); border-color: var(--accent);}
-    
     .icon{ font-family:"Material Symbols Outlined"; font-size:44px; color:var(--accent); flex:0 0 auto; }
-    .text{min-width:0;}
     .t1{ font-size:.95rem; font-weight:800; line-height:1.2; }
     .t2{ font-size:.8rem; color:var(--muted); margin-top:4px; line-height:1.3; }
-
     .live-notice { background: rgba(15, 23, 42, 0.5); border: 1px solid var(--border); padding: 10px; border-radius: 12px; margin: 10px 0; color: var(--accent); font-weight: bold; }
     footer{ padding:20px 0; color:var(--muted); font-size:.70rem; text-align:center; border-top: 1px solid var(--border); }
     @media(max-width:720px){ .grid{grid-template-columns:repeat(2, minmax(0, 1fr));} }
@@ -90,6 +102,26 @@
 </head>
 
 <body>
+  <div id="closedOverlay">
+    <div class="particle" style="width:2px; height:2px; left:15%; animation-delay:0s;"></div>
+    <div class="particle" style="width:3px; height:3px; left:45%; animation-delay:2s;"></div>
+    <div class="particle" style="width:2px; height:2px; left:75%; animation-delay:5s;"></div>
+    
+    <div class="pulse-logo-closed">FW</div>
+    <h2 style="color:var(--accent); font-size:1.8rem; margin:20px 0 5px; font-weight:900;">දැනට වෙබ් අඩවිය වසා ඇත</h2>
+    <p id="dynamicQuote" style="color:var(--muted); font-style:italic; font-size:0.85rem; margin-bottom:20px;">"සාර්ථකත්වයේ රහස වන්නේ හෙට දවස සඳහා අද සූදානම් වීමයි."</p>
+    
+    <div style="background: rgba(56,189,248,0.05); padding: 25px; border-radius: 25px; border: 1px solid rgba(56,189,248,0.1); min-width: 290px;">
+        <small style="color:var(--muted); text-transform:uppercase; letter-spacing:2px; font-size:0.7rem;">අපි නැවත විවෘත වන්නේ</small>
+        <div id="bigTimer" class="big-timer">00:00:00</div>
+    </div>
+
+    <div style="margin-top:35px; display:flex; gap:10px; align-items:center;">
+        <span style="width:10px; height:10px; background:#10b981; border-radius:50%; animation: blink-status 1.5s infinite;"></span>
+        <span style="color:#10b981; font-size:0.75rem; font-weight:bold; letter-spacing:1px;">SECURE SERVER ACTIVE</span>
+    </div>
+  </div>
+
   <div class="topbar">
     <div class="topbarInner">
       <div class="logo">FW</div>
@@ -138,7 +170,7 @@
       <a class="tile" href="affiliatemarketing.html"><span class="icon">paid</span><div class="text"><div class="t1">Affiliate Marketing</div><div class="t2">පෝස්ටි share හරහා මුදල් හොයමු.</div></div></a>
       <a class="tile" href="memberideas/index.html"><span class="icon">lightbulb</span><div class="text"><div class="t1">Member Ideas</div><div class="t2">සාමාජිකයන්ගේ අදහස්.</div></div></a>
       <a class="tile" href="companyintro.html"><span class="icon">apartment</span><div class="text"><div class="t1">Company</div><div class="t2">අප ආයතනය හා අධ්‍යක්ෂක.</div></div></a>
-      <a class="tile" href="https://chat.whatsapp.com/Jete114HEg81ToVd3nzo85" target="_blank"><span class="icon">forum</span><div class="text"><div class="t1">Chat Support</div><div class="t2">සහය ලබා ගන්න</div></div></a>
+      <a class="tile" href="https://chat.whatsapp.com/GzM4KmWbvaJ4kgMLxA0xBS" target="_blank"><span class="icon">forum</span><div class="text"><div class="t1">Chat Support</div><div class="t2">සහය ලබා ගන්න</div></div></a>
       <a class="tile" href="notice.html"><span class="icon">campaign</span><div class="text"><div class="t1">Notice</div><div class="t2">ආයතනික නිවේදන බලන්න.</div></div></a>
     </div>
 
@@ -165,6 +197,54 @@
       const id = prompt("Member ID ඇතුළත් කරන්න:");
       if (id !== "FW0001") { event.preventDefault(); alert("Admin පමණයි!"); }
     }
+
+    /* --- Logic with Variable Fixed --- */
+    const siteQuotes = [
+      "සාර්ථකත්වයේ රහස වන්නේ හෙට දවස සඳහා අද සූදානම් වීමයි.",
+      "නැවුම් මනසකින් හෙට වැඩ පටන් ගනිමු.",
+      "අද හොඳින් නිදාගන්න, හෙට ජයග්‍රහණය ඔබෙයි!",
+      "ඔබේ සිහිනය වෙනුවෙන් හෙට තවත් පියවරක් තබමු."
+    ];
+
+    function siteControl() {
+      const now = new Date();
+      const currentMin = now.getHours() * 60 + now.getMinutes();
+      const closeMin = 22 * 60; // 10:00 PM
+      const openMin = 6 * 60 + 30; // 6:30 AM (Fixed variable name)
+
+      const overlay = document.getElementById('closedOverlay');
+      const isClosed = (currentMin >= closeMin || currentMin < openMin);
+
+      if (isClosed) {
+        overlay.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        
+        const quoteEl = document.getElementById('dynamicQuote');
+        if(quoteEl) quoteEl.innerText = siteQuotes[Math.floor(Math.random() * siteQuotes.length)];
+
+        let target = new Date();
+        if (now.getHours() >= 22) target.setDate(target.getDate() + 1);
+        target.setHours(6, 30, 0, 0);
+
+        setInterval(() => {
+          const diff = target - new Date();
+          if (diff <= 0) location.reload();
+          
+          const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+          const m = Math.floor((diff / (1000 * 60)) % 60);
+          const s = Math.floor((diff / 1000) % 60);
+          
+          const timerEl = document.getElementById('bigTimer');
+          if(timerEl) {
+            timerEl.innerText = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+          }
+        }, 1000);
+      } else {
+        overlay.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+    }
+    siteControl();
   </script>
 </body>
 </html>
